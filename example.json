@@ -1,0 +1,27 @@
+{
+    "_id": "c-120",
+    "_parentId":"b-60",
+    "_type":"component",
+    "_component":"reveal",
+    "_classes":"",
+    "_layout":"right",
+    "_direction":"left",        
+    "title": "",
+    "body": "",
+    "first": {
+        "src": "course/en/images/origami-menu-one.jpg",
+        "alt": "First item",
+        "title": "First item",
+        "body": "Here is the first item"
+    },
+    "second": {
+        "src": "course/en/images/origami-menu-two.jpg",
+        "alt": "Second item",
+        "title": "Second item",
+        "body": "Here is the second item"
+    },
+    "control": {
+        "showText": "Show",
+        "hideText": "Hide"
+    }
+}

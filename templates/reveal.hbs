@@ -1,0 +1,33 @@
+<div class="inner">
+    {{#if title}}
+    <div class="title">
+        <h4>{{{title}}}</h4>
+    </div>
+    {{/if}}
+    {{#if body}}
+    <div class="body">
+        <p>{{{body}}}</p>
+    </div>
+    {{/if}}
+    <div class="reveal-widget">
+        <div class="reveal-widget-slider">
+            <div class="reveal-widget-item">
+                {{#if second.src}}
+                <img src="{{second.src}}" class="reveal-image" alt="{{second.alt}}" title="{{second.title}}"/>
+                {{/if}}
+                {{#if second.body}}
+                <div class="reveal-widget-item-text second"><span>{{second.body}}</span></div>
+                {{/if}}
+            </div>
+            <div class="reveal-widget-item">
+                {{#if first.src}}
+                <img src="{{first.src}}" class="reveal-image" alt="{{first.alt}}" title="{{first.title}}"/>
+                {{/if}}
+                {{#if first.body}}
+                <div class="reveal-widget-item-text first"><span>{{first.body}}</span></div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="reveal-widget-control"><div class="reveal-widget-icon icon"></div></div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+.reveal-component {
+    .reveal-widget {
+        position: relative;       
+    }
+
+    .reveal-widget-icon {
+        color: @item-text-color;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        vertical-align: middle;
+        width: 100%;
+    }
+
+    .reveal-widget-item {
+        position: relative;
+        width: 50%;
+    }
+
+    .reveal-widget-item.reveal-left {
+        float: left;
+    }
+
+    .reveal-widget-item.reveal-right {
+        float: right;
+    }
+
+    .reveal-image {
+        display: block;
+    }
+
+    .reveal-widget {
+        overflow: hidden;
+    }
+
+    .reveal-widget-slider {
+        margin-left: 0;
+    }
+}
+
+.reveal-widget-control {
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    position: absolute;
+    z-index: 5;
+    width: 40px;
+
+    &.reveal-left {
+        left: 0;
+        top: 0;
+    }
+
+    &.reveal-right {
+        right: 0;
+        top: 0;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+    }
+}
+
+.reveal-widget-item-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.reveal-widget-item-text span {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0);
+  border-image: none;
+  border-style: solid;
+  border-width: 1px;
+  color: #FFFFFF;
+  display: block;
+  left: 60px;
+  margin: 0;
+  max-height: 265px;
+  max-width: 390px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  top: 20px;
+}
