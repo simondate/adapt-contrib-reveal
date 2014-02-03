@@ -45,7 +45,7 @@ define(function(require) {
         },
 
         setControlText: function(isRevealed) {
-            if (this.model.get('control')) {
+            if (this.model.get('_control')) {
                 if (!isRevealed && this.model.get('control').showText) {
                     this.$('.reveal-widget-control').attr('title', this.model.get('control').showText);
                 }
@@ -84,15 +84,21 @@ define(function(require) {
             }
         },
 
-        resizeControl: function() {
+        resizeControl: function() {           
             var imageWidth = this.$('.reveal-widget').width();
             var controlWidth = this.$('.reveal-widget-control').width();
+            var direction = this.model.get('_direction');
+
 
             if (this.model.get('_revealed')) {
-                this.$('.reveal-widget-control').css(this.model.get('_direction'), imageWidth - controlWidth)
+                this.$('.reveal-widget-control').css(direction, imageWidth - controlWidth);
+                this.$('.reveal-widget-slider').css('margin-left', (direction == 'left') ? 0 : - imageWidth);
+            } else {
+                this.$('.reveal-widget-slider').css('margin-left', (direction == 'left') ? imageWidth : 0);
             }
 
             this.$('.reveal-widget-slider').css('width', 2 * imageWidth);
+            this.$('.reveal-widget-slider').css('margin-' + direction, -imageWidth);            
 
             this.model.set('_scrollWidth', imageWidth);
             this.model.set('_controlWidth', controlWidth);
@@ -136,12 +142,7 @@ define(function(require) {
                 classToAdd = 'icon-arrow-' + direction; 
                 classToRemove = 'icon-arrow-' + this.getOppositeDirection(direction);
 
-                if (direction == 'left') {
-                    sliderAnimation['margin-' + direction] = 0;                
-                } else {
-                    sliderAnimation['margin-' + this.getOppositeDirection(direction)] = -scrollWidth;
-                    
-                }
+                sliderAnimation['margin-left'] = (direction == 'left') ? 0 : -scrollWidth;
 
                 this.setCompletionStatus();
             } else {
@@ -152,12 +153,7 @@ define(function(require) {
                 classToAdd = 'icon-arrow-' + this.getOppositeDirection(direction);
                 classToRemove = 'icon-arrow-' + direction;
 
-                if (direction == 'left') {
-                    sliderAnimation['margin-' + direction] = -controlMovement;                
-                } else {
-                    sliderAnimation['margin-' + this.getOppositeDirection(direction)] = 0;
-                    
-                }
+                sliderAnimation['margin-left'] = (direction == 'left') ? controlMovement : 0
             }
 
             // Change the UI to handle the new state
