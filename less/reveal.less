@@ -26,7 +26,15 @@
     }
 
     .reveal-image {
-        display: block;
+        display: inline-block;
+    }
+
+    .reveal-image.reveal-right {
+        float: right;
+    }
+
+    .reveal-image.reveal-left {
+        float: left;
     }
 
     .reveal-widget {
@@ -63,8 +71,17 @@
 
 .reveal-widget-item-text {
     position: absolute;
-    top: 0;
-    left: 0;
+    width: 80%;
+
+   &.reveal-left {
+        left: 0;
+        top: 0;
+    }
+
+    &.reveal-right {
+        right: 0;
+        top: 0;
+    } 
 }
 
 .reveal-widget-item-text span {
@@ -75,12 +92,19 @@
   border-width: 1px;
   color: #FFFFFF;
   display: block;
-  left: 60px;
   margin: 0;
   max-height: 265px;
   max-width: 390px;
-  overflow: hidden;
   padding: 10px;
-  position: relative;
+  position: absolute;
+  overflow: visible;
   top: 20px;
+
+     &.reveal-left {
+        left: 60px;
+    }
+
+    &.reveal-right {
+        right: 60px;
+    }
 }
