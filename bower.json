@@ -1,9 +1,11 @@
 {
   "name": "adapt-contrib-reveal",
   "version": "0.0.1",
+  "repository": "git://github.com/LearningPool/adapt-contrib-reveal.git",
   "homepage": "https://github.com/LearningPool/adapt-contrib-reveal",
   "authors": [
-    "Brian Quinn <brian@learningpool.com>"
+    "Brian Quinn <brian@learningpool.com>",
+    "Dan Gray <dan@delta-net.co.uk>"
   ],
   "description": "A component which allows displaying alternating images and/or text via a slider control",
   "main": "/js/adapt-contrib-reveal.js",
