@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/adaptlearning/adapt-contrib-reveal.git"
+    "url": "git://github.com/LearningPool/adapt-contrib-reveal.git"
   },
   "author": "AdaptLearning",
   "license": "GPL v3",
   "bugs": {
-    "url": "https://github.com/adaptlearning/adapt-contrib-reveal/issues"
+    "url": "https://github.com/LearningPool/adapt-contrib-reveal/issues"
   },
   "devDependencies": {
     "karma": "~0.9",
