@@ -9,7 +9,7 @@ define(function(require) {
     var Adapt = require("coreJS/adapt");
 
     var Reveal = ComponentView.extend({
-        
+
         events: function () {
             return Adapt.device.touch == true ? {
                 'touchstart .reveal-widget-control':'clickReveal',
@@ -33,6 +33,10 @@ define(function(require) {
             // Initialise the directional arrows
             this.$('.reveal-widget-item').addClass('reveal-' + this.model.get('_direction'));
             this.$('.reveal-widget-control').addClass('reveal-' + direction);
+            this.$('.reveal-image').addClass('reveal-' + direction);
+            this.$('.reveal-widget-item-text').addClass('reveal-' + direction);
+
+            this.$('.reveal-widget-item-text span').addClass('reveal-' + direction);
             this.$('.reveal-widget-icon').addClass('icon-arrow-' + this.getOppositeDirection(direction));
 
             this.model.set('_direction', direction);
@@ -60,10 +64,10 @@ define(function(require) {
             var direction = this.model.get('_direction');
             var imageWidth = this.$('.reveal-widget').width();
             var controlWidth = this.$('.reveal-widget-control').width();
-            var margin = -imageWidth; 
+            var margin = -imageWidth;
 
             this.$('.reveal-widget-slider').css('width', 2 * imageWidth);
-            
+
             if (this.model.get('_revealed')) {
                 this.$('.reveal-widget-control').css(this.model.get('_direction'), imageWidth - controlWidth)
             }
@@ -84,22 +88,23 @@ define(function(require) {
             }
         },
 
-        resizeControl: function() {           
+        resizeControl: function() {
             var imageWidth = this.$('.reveal-widget').width();
             var controlWidth = this.$('.reveal-widget-control').width();
             var direction = this.model.get('_direction');
-
+            var scrollWidth = this.model.get('_scrollWidth');
+            var sliderAnimation = {};
 
             if (this.model.get('_revealed')) {
-                this.$('.reveal-widget-control').css(direction, imageWidth - controlWidth);
-                this.$('.reveal-widget-slider').css('margin-left', (direction == 'left') ? 0 : - imageWidth);
+                this.$('.reveal-widget-slider').css('margin-left', (direction == 'left') ? -imageWidth : 0);
+                sliderAnimation['margin-left'] = (direction == 'left') ? 0 :  -imageWidth
+                this.$('.reveal-widget-slider').animate(sliderAnimation);
             } else {
                 this.$('.reveal-widget-slider').css('margin-left', (direction == 'left') ? imageWidth : 0);
             }
 
             this.$('.reveal-widget-slider').css('width', 2 * imageWidth);
-            this.$('.reveal-widget-slider').css('margin-' + direction, -imageWidth);            
-
+            this.$('.reveal-widget-slider').css('margin-' + direction, -imageWidth);
             this.model.set('_scrollWidth', imageWidth);
             this.model.set('_controlWidth', controlWidth);
         },
@@ -109,7 +114,7 @@ define(function(require) {
                 this.setReadyStatus();
             }, this));
         },
-        
+
         getOppositeDirection: function(direction) {
             switch(direction) {
                 case 'left':
@@ -119,7 +124,6 @@ define(function(require) {
                     oppositeDirection = 'left';
                     break;
             }
-
             return oppositeDirection;
         },
 
@@ -129,23 +133,25 @@ define(function(require) {
             var direction = this.model.get('_direction');
             var scrollWidth = this.model.get('_scrollWidth');
             var controlWidth = this.model.get('_controlWidth');
-            var controlMovement = (!this.model.get('_revealed')) ? scrollWidth - controlWidth : scrollWidth; 
+            var controlMovement = (!this.model.get('_revealed')) ? scrollWidth - controlWidth : scrollWidth;
             var operator = !this.model.get('_revealed') ? '+=' : '-=';
             var controlAnimation = {}, sliderAnimation = {};
-            
+
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
+                // reveal second
                 this.model.set('_revealed', true);
                 this.$('.reveal-widget').addClass('reveal-showing');
 
                 controlAnimation[direction] = operator + controlMovement;
-                classToAdd = 'icon-arrow-' + direction; 
+                classToAdd = 'icon-arrow-' + direction;
                 classToRemove = 'icon-arrow-' + this.getOppositeDirection(direction);
 
                 sliderAnimation['margin-left'] = (direction == 'left') ? 0 : -scrollWidth;
 
                 this.setCompletionStatus();
             } else {
+                //show first
                 this.model.set('_revealed', false);
                 this.$('.reveal-widget').removeClass('reveal-showing');
 
@@ -153,19 +159,17 @@ define(function(require) {
                 classToAdd = 'icon-arrow-' + this.getOppositeDirection(direction);
                 classToRemove = 'icon-arrow-' + direction;
 
-                sliderAnimation['margin-left'] = (direction == 'left') ? controlMovement : 0
+                sliderAnimation['margin-left'] = (direction == 'left') ? operator + controlMovement : 0
             }
-
             // Change the UI to handle the new state
             this.$('.reveal-widget-slider').animate(sliderAnimation);
-            this.$('.reveal-widget-control').animate(controlAnimation);
             this.$('.reveal-widget-icon').removeClass(classToRemove).addClass(classToAdd);
 
             this.setControlText(this.model.get('_revealed'));
         }
     });
-    
+
     Adapt.register("reveal", Reveal);
-    
+
     return Reveal;
 });
