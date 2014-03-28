@@ -14,4 +14,4 @@ Usage
 -----
 Once installed, the component can be used to create a click to reveal component with associated text and graphics.
 
-For example JSON format, see [example.json](https://github.com/adaptlearning/adapt-contrib-reveal/example.json)
+For example JSON format, see [example.json](https://github.com/LearningPool/adapt-contrib-reveal/blob/master/example.json)
