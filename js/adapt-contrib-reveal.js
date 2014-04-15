@@ -110,10 +110,14 @@ define(function(require) {
             if (Adapt.device.screenSize === 'small') {
                 this.model.set('_displayFirstShortText', firstHasPopup);
                 this.model.set('_displaySecondShortText', secondHasPopup);
-                this.$('.reveal-first-short').removeClass('reveal-hidden');
-                this.$('.reveal-first-long').addClass('reveal-hidden');
-                this.$('.reveal-second-short').removeClass('reveal-hidden');
-                this.$('.reveal-second-long').addClass('reveal-hidden');
+                if (firstHasPopup) {
+                    this.$('.reveal-first-short').removeClass('reveal-hidden');
+                    this.$('.reveal-first-long').addClass('reveal-hidden');
+                }
+                if (secondHasPopup) {
+                    this.$('.reveal-second-short').removeClass('reveal-hidden');
+                    this.$('.reveal-second-long').addClass('reveal-hidden');
+                }
             } else {
                 this.model.set('_displayFirstShortText', false);
                 this.model.set('_displaySecondShortText', false);
