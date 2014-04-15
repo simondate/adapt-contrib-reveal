@@ -13,16 +13,21 @@ define(function(require) {
         events: function () {
             return Adapt.device.touch == true ? {
                 'touchstart .reveal-widget-control':'clickReveal',
-                'inview' : 'inview'
+                'inview' : 'inview',
+                'touchstart .reveal-popup-open' : 'openPopup',
+                'click .reveal-popup-close' : 'closePopup'
             }:{
                 'click .reveal-widget-control':'clickReveal',
-                'inview' : 'inview'
+                'inview' : 'inview',
+                'click .reveal-popup-open' : 'openPopup',
+                'click .reveal-popup-close' : 'closePopup'
             }
         },
 
         preRender: function() {
             this.listenTo(Adapt, 'pageView:ready', this.setupReveal, this);
             this.listenTo(Adapt, 'device:resize', this.resizeControl, this);
+            this.listenTo(Adapt, 'device:changed', this.setDeviceSize, this);
 
             this.setDeviceSize();
         },
@@ -84,7 +89,38 @@ define(function(require) {
                 this.model.set('_isDesktop', true);
             } else {
                 this.$el.addClass('mobile').removeClass('desktop');
-                this.model.set('_isDesktop', false)
+                this.model.set('_isDesktop', false);
+            }
+
+            // On mobile, Check for items with long text. We'll provide a popup for these
+            var charLimit = 50;
+            var first = this.model.get('first');
+            var second = this.model.get('second');
+            var firstCharLimit = first._maxCharacters || charLimit;
+            var secondCharLimit = second._maxCharacters || charLimit;
+            var firstHasPopup = first.body && first.body.length > firstCharLimit;
+            var secondHasPopup = second.body && second.body.length > secondCharLimit;
+
+            if (firstHasPopup) {
+                this.model.set('_firstShortText', first.body.substring(0, firstCharLimit) + '...');
+            }
+            if (secondHasPopup) {
+                this.model.set('_secondShortText', second.body.substring(0, secondCharLimit) + '...');
+            }
+            if (Adapt.device.screenSize === 'small') {
+                this.model.set('_displayFirstShortText', firstHasPopup);
+                this.model.set('_displaySecondShortText', secondHasPopup);
+                this.$('.reveal-first-short').removeClass('reveal-hidden');
+                this.$('.reveal-first-long').addClass('reveal-hidden');
+                this.$('.reveal-second-short').removeClass('reveal-hidden');
+                this.$('.reveal-second-long').addClass('reveal-hidden');
+            } else {
+                this.model.set('_displayFirstShortText', false);
+                this.model.set('_displaySecondShortText', false);
+                this.$('.reveal-first-short').addClass('reveal-hidden');
+                this.$('.reveal-first-long').removeClass('reveal-hidden');
+                this.$('.reveal-second-short').addClass('reveal-hidden');
+                this.$('.reveal-second-long').removeClass('reveal-hidden');
             }
         },
 
@@ -166,6 +202,27 @@ define(function(require) {
             this.$('.reveal-widget-icon').removeClass(classToRemove).addClass(classToAdd);
 
             this.setControlText(this.model.get('_revealed'));
+        },
+
+        openPopup: function (event) {
+            event.preventDefault();
+            this.model.set('_active', false);
+
+            var outerMargin = parseFloat(this.$('.reveal-popup-inner').css('margin'));
+            var innerPadding = parseFloat(this.$('.reveal-popup-inner').css('padding'));
+            var toolBarHeight = this.$('.reveal-toolbar').height();
+
+            this.$('.reveal-popup-content').addClass('reveal-hidden').eq(this.model.get('_revealed') ? 1 : 0).removeClass('reveal-hidden');
+            this.$('.reveal-popup-inner').css('height', $(window).height() - (outerMargin * 2) - (innerPadding * 2));
+            this.$('.reveal-popup').removeClass('reveal-hidden');
+            this.$('.reveal-popup-content').css('height', (this.$('.reveal-popup-inner').height() - toolBarHeight));
+        },
+
+        closePopup: function (event) {
+            event.preventDefault();
+            this.model.set('_active', true);
+            this.$('.reveal-popup-close').blur();
+            this.$('.reveal-popup').addClass('reveal-hidden');
         }
     });
 
