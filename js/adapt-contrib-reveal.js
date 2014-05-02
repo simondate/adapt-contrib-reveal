@@ -13,6 +13,7 @@ define(function(require) {
         events: function () {
             return Adapt.device.touch == true ? {
                 'touchstart .reveal-widget-control':'clickReveal',
+		'click .reveal-widget-control':'clickReveal',
                 'inview' : 'inview',
                 'touchstart .reveal-popup-open' : 'openPopup',
                 'click .reveal-popup-close' : 'closePopup'
