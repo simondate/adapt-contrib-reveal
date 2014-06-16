@@ -1,0 +1,86 @@
+{
+  "type":"object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/plugins/content/component/model.schema",
+  "properties":{
+    "_direction": {
+      "type":"string",
+      "required":false
+    },
+    "control": {
+      "type":"object",
+      "required":false,
+      "properties":{
+        "hideText": {
+          "type":"string",
+          "required":false
+        },
+        "showText": {
+          "type":"string",
+          "required":false
+        }
+      }
+    },
+    "first": {
+      "type":"object",
+      "required":true,
+      "properties":{
+        "_maxCharacters": {
+          "type":"number",
+          "required":false
+        },
+        "alt": {
+          "type":"string",
+          "required":false
+        },
+        "body": {
+          "type":"string",
+          "required":false
+        },
+        "moreText": {
+          "type":"string",
+          "required":false
+        },
+        "src": {
+          "type":"string",
+          "required":false
+        },
+        "title": {
+          "type":"string",
+          "required":false
+        }
+      }
+    },
+    "second": {
+      "type":"object",
+      "required":true,
+      "properties":{
+        "_maxCharacters": {
+          "type":"number",
+          "required":false
+        },
+        "alt": {
+          "type":"string",
+          "required":false
+        },
+        "body": {
+          "type":"string",
+          "required":false
+        },
+        "moreText": {
+          "type":"string",
+          "required":false
+        },
+        "src": {
+          "type":"string",
+          "required":false
+        },
+        "title": {
+          "type":"string",
+          "required":false
+        }
+      }
+    }
+  }
+}
