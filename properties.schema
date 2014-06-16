@@ -3,7 +3,6 @@
   "$schema": "http://json-schema.org/draft-03/schema",
   "id": "http://jsonschema.net",
   "$ref": "http://localhost/plugins/content/component/model.schema",
-  "displayName": "Reveal",
   "properties":{
     "_direction": {
       "type":"string",

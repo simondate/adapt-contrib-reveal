@@ -7,6 +7,7 @@
     "Brian Quinn <brian@learningpool.com>",
     "Dan Gray <dan@delta-net.co.uk>"
   ],
+  "displayName": "Reveal",
   "description": "A component which allows displaying alternating images and/or text via a slider control",
   "main": "/js/adapt-contrib-reveal.js",
   "keywords": [
