@@ -8,6 +8,7 @@
     "Dan Gray <dan@delta-net.co.uk>"
   ],
   "displayName": "Reveal",
+  "component" : "reveal",
   "description": "A component which allows displaying alternating images and/or text via a slider control",
   "main": "/js/adapt-contrib-reveal.js",
   "keywords": [
