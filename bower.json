@@ -9,6 +9,10 @@
   ],
   "displayName": "Reveal",
   "component" : "reveal",
+  "assetFields" : [
+    "first.src",
+    "second.src"
+  ],
   "description": "A component which allows displaying alternating images and/or text via a slider control",
   "main": "/js/adapt-contrib-reveal.js",
   "keywords": [
