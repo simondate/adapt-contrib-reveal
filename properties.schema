@@ -6,7 +6,12 @@
   "properties":{
     "_direction": {
       "type":"string",
-      "required":false
+      "required":true,
+      "default": "left",
+      "enum": [
+        "left",
+        "right"
+      ]
     },
     "control": {
       "type":"object",
