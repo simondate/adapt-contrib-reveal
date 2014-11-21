@@ -17,7 +17,7 @@
     "control": {
       "type":"object",
       "required":false,
-      "title": "Control (optional)"
+      "title": "Control (optional)",
       "properties":{
         "hideText": {
           "type": "string",
