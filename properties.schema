@@ -5,25 +5,37 @@
   "$ref": "http://localhost/plugins/content/component/model.schema",
   "properties":{
     "_direction": {
-      "type":"string",
-      "required":true,
+      "type": "string",
+      "required": true,
+      "enum": ["left", "right"],
       "default": "left",
-      "enum": [
-        "left",
-        "right"
-      ]
+      "title": "Direction",
+      "inputType": {"type": "Select", "options":["left", "right"]},
+      "validators": ["required"],
+      "help": "Indicates the direction content will be revealed from"
     },
     "control": {
       "type":"object",
       "required":false,
+      "title": "Control (optional)"
       "properties":{
         "hideText": {
-          "type":"string",
-          "required":false
+          "type": "string",
+          "required": false,
+          "title": "Label for 'hide' text",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Text which when clicked hides the reveal"
         },
         "showText": {
-          "type":"string",
-          "required":false
+          "type": "string",
+          "required": false,
+          "title": "Label for 'show' text",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Text which when clicked shows the reveal"
         }
       }
     },
@@ -33,27 +45,56 @@
       "properties":{
         "_maxCharacters": {
           "type":"number",
-          "required":false
+          "required":false,
+          "title": "Maximum characters to display on overlay",
+          "inputType": "Number",
+          "validators": ["number"],
+          "help": "Number of characters to display before clipping the text on mobile devices"
         },
         "alt": {
           "type":"string",
-          "required":false
+          "required":false,
+          "title": "Alternative text",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Text displayed when hovering over the image"
         },
         "body": {
           "type":"string",
-          "required":false
+          "required": false,
+          "default": "",
+          "title": "Correct",
+          "inputType": "TextArea",
+          "validators": [],
+          "help": "Initial text to be displayed over the image"
         },
         "moreText": {
           "type":"string",
-          "required":false
+          "required":false,
+          "title": "Label for 'more' text",
+          "default": "More",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Text which is placed in the link for 'more' text"
         },
         "src": {
           "type":"string",
-          "required":false
+          "required":false,
+          "default": "",
+          "title": "Initial image",
+          "inputType": "Asset:image",
+          "validators": [],
+          "help": "Image to be displayed intially"
         },
         "title": {
           "type":"string",
-          "required":false
+          "required":false,
+          "title": "Title",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Title of the initial item"
         }
       }
     },
@@ -63,27 +104,56 @@
       "properties":{
         "_maxCharacters": {
           "type":"number",
-          "required":false
+          "required":false,
+          "title": "Maximum characters to display on overlay",
+          "inputType": "Number",
+          "validators": ["number"],
+          "help": "Number of characters to display before clipping the text on mobile devices"
         },
         "alt": {
           "type":"string",
-          "required":false
+          "required":false,
+          "title": "Alternative text",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Text displayed when hovering over the image"
         },
         "body": {
           "type":"string",
-          "required":false
+          "required": false,
+          "default": "",
+          "title": "Reveal text",
+          "inputType": "TextArea",
+          "validators": [],
+          "help": "Text which will be displayed on reveal"
         },
         "moreText": {
           "type":"string",
-          "required":false
+          "required":false,
+          "title": "Label for 'more' text",
+          "default": "More",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Text which is placed in the link for 'more' text"
         },
         "src": {
           "type":"string",
-          "required":false
+          "required":false,
+          "default": "",
+          "title": "Revealed image",
+          "inputType": "Asset:image",
+          "validators": [],
+          "help": "Image to be displayed on reveal"
         },
         "title": {
           "type":"string",
-          "required":false
+          "required":false,
+          "title": "Title",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Title of the revealed item"
         }
       }
     }
