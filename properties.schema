@@ -64,7 +64,7 @@
           "type":"string",
           "required": false,
           "default": "",
-          "title": "Correct",
+          "title": "Initial text",
           "inputType": "TextArea",
           "validators": [],
           "help": "Initial text to be displayed over the image"
