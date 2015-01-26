@@ -1,15 +1,6 @@
-<div class="inner">
-    {{#if displayTitle}}
-    <div class="title">
-        <h4>{{{displayTitle}}}</h4>
-    </div>
-    {{/if}}
-    {{#if body}}
-    <div class="body">
-        <p>{{{body}}}</p>
-    </div>
-    {{/if}}
-    <div class="reveal-widget">
+<div class="reveal-inner component-inner">
+    {{> component this}}
+    <div class="reveal-widget reveal-component component-widget">
         <div class="reveal-widget-slider">
             <div class="reveal-widget-item">
                 {{#if second.src}}
