@@ -84,7 +84,7 @@
           "default": "",
           "title": "Initial image",
           "inputType": "Asset:image",
-          "validators": [],
+          "validators": ["required"],
           "help": "Image to be displayed intially"
         },
         "title": {
@@ -143,7 +143,7 @@
           "default": "",
           "title": "Revealed image",
           "inputType": "Asset:image",
-          "validators": [],
+          "validators": ["required"],
           "help": "Image to be displayed on reveal"
         },
         "title": {
