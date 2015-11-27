@@ -13,7 +13,7 @@ define(function(require) {
         events: function () {
             return Adapt.device.touch == true ? {
                 'touchstart .reveal-widget-control':'clickReveal',
-		        'click .reveal-widget-control':'clickReveal',
+		            'click .reveal-widget-control':'clickReveal',
                 'inview' : 'inview',
                 'touchstart .reveal-popup-open' : 'openPopup',
                 'click .reveal-popup-close' : 'closePopup'
@@ -103,10 +103,10 @@ define(function(require) {
             var secondHasPopup = second.body && second.body.length > secondCharLimit;
 
             if (firstHasPopup) {
-                this.model.set('_firstShortText', first.body.substring(0, firstCharLimit) + '...');
+                this.model.set('_firstShortText', $(first.body).text().substring(0, firstCharLimit) + '...');
             }
             if (secondHasPopup) {
-                this.model.set('_secondShortText', second.body.substring(0, secondCharLimit) + '...');
+                this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
             }
             if (Adapt.device.screenSize === 'small') {
                 this.model.set('_displayFirstShortText', firstHasPopup);
@@ -133,7 +133,6 @@ define(function(require) {
             var imageWidth = this.$('.reveal-widget').width();
             var controlWidth = this.$('.reveal-widget-control').width();
             var direction = this.model.get('_direction');
-            var scrollWidth = this.model.get('_scrollWidth');
             var sliderAnimation = {};
 
             if (this.model.get('_revealed')) {
@@ -177,7 +176,9 @@ define(function(require) {
             var controlMovement = (!this.model.get('_revealed')) ? scrollWidth - controlWidth : scrollWidth;
             var operator = !this.model.get('_revealed') ? '+=' : '-=';
             var controlAnimation = {}, sliderAnimation = {};
-
+            var classToAdd;
+            var classToRemove;
+            
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
                 // reveal second
