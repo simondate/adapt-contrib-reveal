@@ -15,13 +15,11 @@ define(function(require) {
                 'touchstart .reveal-widget-control':'clickReveal',
 		            'click .reveal-widget-control':'clickReveal',
                 'inview' : 'inview',
-                'touchstart .reveal-popup-open' : 'openPopup',
-                'click .reveal-popup-close' : 'closePopup'
+                'touchstart .reveal-popup-open' : 'openPopup'
             }:{
                 'click .reveal-widget-control':'clickReveal',
                 'inview' : 'inview',
-                'click .reveal-popup-open' : 'openPopup',
-                'click .reveal-popup-close' : 'closePopup'
+                'click .reveal-popup-open' : 'openPopup'
             }
         },
 
@@ -213,24 +211,20 @@ define(function(require) {
 
         openPopup: function (event) {
             event.preventDefault();
+
             this.model.set('_active', false);
 
-            var outerMargin = parseFloat(this.$('.reveal-popup-inner').css('margin'));
-            var innerPadding = parseFloat(this.$('.reveal-popup-inner').css('padding'));
-            var toolBarHeight = this.$('.reveal-toolbar').height();
+            var bodyText = this.model.get('_revealed')
+              ? this.model.get('second').body
+              : this.model.get('first').body;
 
-            this.$('.reveal-popup-content').addClass('reveal-hidden').eq(this.model.get('_revealed') ? 1 : 0).removeClass('reveal-hidden');
-            this.$('.reveal-popup-inner').css('height', $(window).height() - (outerMargin * 2) - (innerPadding * 2));
-            this.$('.reveal-popup').removeClass('reveal-hidden');
-            this.$('.reveal-popup-content').css('height', (this.$('.reveal-popup-inner').height() - toolBarHeight));
-        },
+            var popupObject = {
+                title: '',
+                body: bodyText
+            };
 
-        closePopup: function (event) {
-            event.preventDefault();
-            this.model.set('_active', true);
-            this.$('.reveal-popup-close').blur();
-            this.$('.reveal-popup').addClass('reveal-hidden');
-        }
+            Adapt.trigger('notify:popup', popupObject);
+      }
     });
 
     Adapt.register("reveal", Reveal);

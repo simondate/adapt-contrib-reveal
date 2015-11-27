@@ -126,6 +126,7 @@ div.reveal-widget-item-text-body {
 }
 
 .reveal-popup-open {
+    color: @item-text-color;
     background-color: @button-color;
     display: inline;
     line-height: 100%;
@@ -146,24 +147,11 @@ div.reveal-widget-item-text-body {
         vertical-align: text-top;
         width: 100%;
     }
-
-    .reveal-link-text {
-        color: @item-text-color;
-        display: inline;
-        vertical-align: baseline;
-    }
 }
 
-.reveal-popup-close {
-    display: inline-block;
-    float: right;
-    color: @primary-color;
-    .icon {
-        color:@inverted-foreground-color;
-        &:hover {
-            color:lighten(@inverted-background-color, 30%);
-        }
-    }
+div.reveal-link-text {
+    margin-top: 10px;
+    display: block;
 }
 
 .reveal-hidden {
