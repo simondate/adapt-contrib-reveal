@@ -40,9 +40,9 @@ define(function(require) {
             this.$('.reveal-widget-item').addClass('reveal-' + this.model.get('_direction'));
             this.$('.reveal-widget-control').addClass('reveal-' + direction);
             this.$('.reveal-image').addClass('reveal-' + direction);
-            this.$('.reveal-widget-item-text').addClass('reveal-' + direction);
+            this.$('div.reveal-widget-item-text').addClass('reveal-' + direction);
 
-            this.$('.reveal-widget-item-text span').addClass('reveal-' + direction);
+            this.$('div.reveal-widget-item-text-body').addClass('reveal-' + direction);
             this.$('.reveal-widget-icon').addClass('icon-arrow-' + this.getOppositeDirection(direction));
 
             this.model.set('_direction', direction);
@@ -79,7 +79,8 @@ define(function(require) {
             }
 
             this.$('.reveal-widget-slider').css('margin-' + direction, margin);
-
+            // Ensure the text doesn't overflow the image
+            this.$('div.reveal-widget-item-text').css('width', ($('img.reveal-image').width() - 80));
             this.model.set('_scrollWidth', imageWidth);
             this.model.set('_controlWidth', controlWidth);
         },

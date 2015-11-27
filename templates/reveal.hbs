@@ -8,10 +8,10 @@
                 {{/if}}
                 {{#if second.body}}
                     <div class="reveal-widget-item-text second">
-                        <span class="reveal-second-long {{#if _displaySecondShortText }}reveal-hidden{{/if}}">
+                        <div class="reveal-widget-item-text-body reveal-second-long {{#if _displaySecondShortText }}reveal-hidden{{/if}}">
                             {{{second.body}}}
-                        </span>
-                        <span class="reveal-second-short {{#unless _displaySecondShortText }}reveal-hidden{{/unless}}">
+                        </div>
+                        <div class="reveal-widget-item-text-body reveal-second-short {{#unless _displaySecondShortText }}reveal-hidden{{/unless}}">
                             {{{_secondShortText}}}
                             <a href="#" class="reveal-popup-open" tabindex="-1">
                                 <div class="reveal-link-text">
@@ -22,7 +22,7 @@
                                     {{/if}}
                                 </div>
                             </a>
-                        </span>
+                        </div>
                     </div>
                 {{/if}}
             </div>
@@ -32,10 +32,10 @@
                 {{/if}}
                 {{#if first.body}}
                     <div class="reveal-widget-item-text first">
-                        <span class="reveal-first-long {{#if _displayFirstShortText }}reveal-hidden{{/if}}">
+                        <div class="reveal-widget-item-text-body reveal-first-long {{#if _displayFirstShortText }}reveal-hidden{{/if}}">
                             {{{first.body}}}
-                        </span>
-                        <span class="reveal-first-short {{#unless _displayFirstShortText }}reveal-hidden{{/unless}}">
+                        </div>
+                        <div class="reveal-widget-item-text-body reveal-first-short {{#unless _displayFirstShortText }}reveal-hidden{{/unless}}">
                             {{{_firstShortText}}}
                             <a href="#" class="reveal-popup-open" tabindex="-1">
                                 <div class="reveal-link-text">
@@ -46,7 +46,7 @@
                                     {{/if}}
                                 </div>
                             </a>
-                        </span>
+                        </div>
                     </div>
                 {{/if}}
             </div>
