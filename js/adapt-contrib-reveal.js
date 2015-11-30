@@ -13,15 +13,13 @@ define(function(require) {
         events: function () {
             return Adapt.device.touch == true ? {
                 'touchstart .reveal-widget-control':'clickReveal',
-		        'click .reveal-widget-control':'clickReveal',
+		            'click .reveal-widget-control':'clickReveal',
                 'inview' : 'inview',
-                'touchstart .reveal-popup-open' : 'openPopup',
-                'click .reveal-popup-close' : 'closePopup'
+                'touchstart .reveal-popup-open' : 'openPopup'
             }:{
                 'click .reveal-widget-control':'clickReveal',
                 'inview' : 'inview',
-                'click .reveal-popup-open' : 'openPopup',
-                'click .reveal-popup-close' : 'closePopup'
+                'click .reveal-popup-open' : 'openPopup'
             }
         },
 
@@ -40,9 +38,9 @@ define(function(require) {
             this.$('.reveal-widget-item').addClass('reveal-' + this.model.get('_direction'));
             this.$('.reveal-widget-control').addClass('reveal-' + direction);
             this.$('.reveal-image').addClass('reveal-' + direction);
-            this.$('.reveal-widget-item-text').addClass('reveal-' + direction);
+            this.$('div.reveal-widget-item-text').addClass('reveal-' + direction);
 
-            this.$('.reveal-widget-item-text span').addClass('reveal-' + direction);
+            this.$('div.reveal-widget-item-text-body').addClass('reveal-' + direction);
             this.$('.reveal-widget-icon').addClass('icon-arrow-' + this.getOppositeDirection(direction));
 
             this.model.set('_direction', direction);
@@ -79,7 +77,8 @@ define(function(require) {
             }
 
             this.$('.reveal-widget-slider').css('margin-' + direction, margin);
-
+            // Ensure the text doesn't overflow the image
+            this.$('div.reveal-widget-item-text').css('width', ($('img.reveal-image').width() - 80));
             this.model.set('_scrollWidth', imageWidth);
             this.model.set('_controlWidth', controlWidth);
         },
@@ -103,10 +102,10 @@ define(function(require) {
             var secondHasPopup = second.body && second.body.length > secondCharLimit;
 
             if (firstHasPopup) {
-                this.model.set('_firstShortText', first.body.substring(0, firstCharLimit) + '...');
+                this.model.set('_firstShortText', $(first.body).text().substring(0, firstCharLimit) + '...');
             }
             if (secondHasPopup) {
-                this.model.set('_secondShortText', second.body.substring(0, secondCharLimit) + '...');
+                this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
             }
             if (Adapt.device.screenSize === 'small') {
                 this.model.set('_displayFirstShortText', firstHasPopup);
@@ -133,7 +132,6 @@ define(function(require) {
             var imageWidth = this.$('.reveal-widget').width();
             var controlWidth = this.$('.reveal-widget-control').width();
             var direction = this.model.get('_direction');
-            var scrollWidth = this.model.get('_scrollWidth');
             var sliderAnimation = {};
 
             if (this.model.get('_revealed')) {
@@ -177,7 +175,9 @@ define(function(require) {
             var controlMovement = (!this.model.get('_revealed')) ? scrollWidth - controlWidth : scrollWidth;
             var operator = !this.model.get('_revealed') ? '+=' : '-=';
             var controlAnimation = {}, sliderAnimation = {};
-
+            var classToAdd;
+            var classToRemove;
+            
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
                 // reveal second
@@ -211,24 +211,20 @@ define(function(require) {
 
         openPopup: function (event) {
             event.preventDefault();
+
             this.model.set('_active', false);
 
-            var outerMargin = parseFloat(this.$('.reveal-popup-inner').css('margin'));
-            var innerPadding = parseFloat(this.$('.reveal-popup-inner').css('padding'));
-            var toolBarHeight = this.$('.reveal-toolbar').height();
+            var bodyText = this.model.get('_revealed')
+              ? this.model.get('second').body
+              : this.model.get('first').body;
 
-            this.$('.reveal-popup-content').addClass('reveal-hidden').eq(this.model.get('_revealed') ? 1 : 0).removeClass('reveal-hidden');
-            this.$('.reveal-popup-inner').css('height', $(window).height() - (outerMargin * 2) - (innerPadding * 2));
-            this.$('.reveal-popup').removeClass('reveal-hidden');
-            this.$('.reveal-popup-content').css('height', (this.$('.reveal-popup-inner').height() - toolBarHeight));
-        },
+            var popupObject = {
+                title: '',
+                body: bodyText
+            };
 
-        closePopup: function (event) {
-            event.preventDefault();
-            this.model.set('_active', true);
-            this.$('.reveal-popup-close').blur();
-            this.$('.reveal-popup').addClass('reveal-hidden');
-        }
+            Adapt.trigger('notify:popup', popupObject);
+      }
     });
 
     Adapt.register("reveal", Reveal);
