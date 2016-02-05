@@ -102,10 +102,10 @@ define(function(require) {
             var secondHasPopup = second.body && second.body.length > secondCharLimit;
 
             if (firstHasPopup) {
-                this.model.set('_firstShortText', $(first.body).text().substring(0, firstCharLimit) + '...');
+                this.model.set('_firstShortText', first.body.substring(0, firstCharLimit) + '...');
             }
             if (secondHasPopup) {
-                this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
+                this.model.set('_secondShortText', second.body.substring(0, secondCharLimit) + '...');
             }
             if (Adapt.device.screenSize === 'small') {
                 this.model.set('_displayFirstShortText', firstHasPopup);
