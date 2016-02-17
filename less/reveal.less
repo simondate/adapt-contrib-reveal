@@ -5,10 +5,10 @@
 
     .reveal-widget-icon {
         color: @item-text-color;
-        height: 100%;
-        line-height: 50px;
-        position: relative;
+        left: 0;
+        position: absolute;
         text-align: center;
+        top: 50%;
         vertical-align: middle;
         width: 100%;
     }
@@ -49,12 +49,10 @@
 
 .reveal-widget-control {
     background-color: darken(@item-color, 15%);
-    background-color: fade(darken(@item-color, 15%), 70%);
-    height: 50px;
-    line-height: 50px;
-    margin-top: -25px;
+    background-color: fade(darken(@item-color, 15%), 70%) !important;
+    height: 100%;
     position: absolute;
-    top: 50%;
+    top: 0;
     width: 50px;
     z-index: 5;
 
@@ -68,7 +66,7 @@
 
     &:hover {
         background-color: darken(@item-color, 15%);
-        background-color: fade(darken(@item-color, 15%), 90%);
+        background-color: fade(darken(@item-color, 15%), 90%) !important;
         cursor: pointer;
     }
 }
