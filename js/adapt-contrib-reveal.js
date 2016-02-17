@@ -41,7 +41,7 @@ define(function(require) {
             this.$('div.reveal-widget-item-text').addClass('reveal-' + direction);
 
             this.$('div.reveal-widget-item-text-body').addClass('reveal-' + direction);
-            this.$('.reveal-widget-icon').addClass('icon-arrow-' + this.getOppositeDirection(direction));
+            this.$('.reveal-widget-icon').addClass('icon-controls-' + this.getOppositeDirection(direction));
 
             this.model.set('_direction', direction);
             this.model.set('_active', true);
@@ -103,12 +103,12 @@ define(function(require) {
 
             if (firstHasPopup) {
                 if (first.body) {
-                    this.model.set('_firstShortText', $(first.body).substring(0, firstCharLimit) + '...'); 
+                    this.model.set('_firstShortText', $(first.body).substring(0, firstCharLimit) + '...');
                 }
             }
             if (secondHasPopup) {
                 if (second.body) {
-                    this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...'); 
+                    this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
                 }
             }
             if (Adapt.device.screenSize === 'small') {
@@ -173,7 +173,7 @@ define(function(require) {
             var controlAnimation = {}, sliderAnimation = {};
             var classToAdd;
             var classToRemove;
-            
+
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
                 // reveal second
@@ -181,8 +181,8 @@ define(function(require) {
                 this.$('.reveal-widget').addClass('reveal-showing');
 
                 controlAnimation[direction] = operator + controlMovement;
-                classToAdd = 'icon-arrow-' + direction;
-                classToRemove = 'icon-arrow-' + this.getOppositeDirection(direction);
+                classToAdd = 'icon-controls-' + direction;
+                classToRemove = 'icon-controls-' + this.getOppositeDirection(direction);
 
                 sliderAnimation['margin-left'] = (direction == 'left') ? 0 : -scrollWidth;
 
@@ -193,8 +193,8 @@ define(function(require) {
                 this.$('.reveal-widget').removeClass('reveal-showing');
 
                 controlAnimation[direction] = 0;
-                classToAdd = 'icon-arrow-' + this.getOppositeDirection(direction);
-                classToRemove = 'icon-arrow-' + direction;
+                classToAdd = 'icon-controls-' + this.getOppositeDirection(direction);
+                classToRemove = 'icon-controls-' + direction;
 
                 sliderAnimation['margin-left'] = (direction == 'left') ? operator + controlMovement : 0
             }
