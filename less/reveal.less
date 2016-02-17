@@ -5,6 +5,7 @@
 
     .reveal-widget-icon {
         color: @item-text-color;
+        left: 0;
         position: absolute;
         text-align: center;
         top: 50%;
@@ -47,24 +48,25 @@
 }
 
 .reveal-widget-control {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: darken(@item-color, 15%);
+    background-color: fade(darken(@item-color, 15%), 70%) !important;
     height: 100%;
     position: absolute;
+    top: 0;
+    width: 50px;
     z-index: 5;
-    width: 40px;
 
     &.reveal-left {
         left: 0;
-        top: 0;
     }
 
     &.reveal-right {
         right: 0;
-        top: 0;
     }
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: darken(@item-color, 15%);
+        background-color: fade(darken(@item-color, 15%), 90%) !important;
         cursor: pointer;
     }
 }
@@ -99,15 +101,16 @@ div.reveal-widget-item-text-body {
   position: absolute;
   overflow: visible;
   top: 0;
+  width: 100%;
 
   p { margin: 0; }
 
   &.reveal-left {
-    padding-left: 60px;
+    padding-left: 70px;
   }
 
   &.reveal-left {
-    padding-right: 60px;
+    padding-right: 70px;
   }
 }
 

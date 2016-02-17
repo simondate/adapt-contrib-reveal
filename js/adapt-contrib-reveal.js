@@ -12,14 +12,14 @@ define(function(require) {
 
         events: function () {
             return Adapt.device.touch == true ? {
-                'touchstart .reveal-widget-control':'clickReveal',
-		            'click .reveal-widget-control':'clickReveal',
-                'inview' : 'inview',
-                'touchstart .reveal-popup-open' : 'openPopup'
-            }:{
-                'click .reveal-widget-control':'clickReveal',
-                'inview' : 'inview',
-                'click .reveal-popup-open' : 'openPopup'
+                'touchstart .reveal-widget-control':  'clickReveal',
+                'click .reveal-widget-control':       'clickReveal',
+                'inview':                             'inview',
+                'touchstart .reveal-popup-open':      'openPopup'
+            } : {
+                'click .reveal-widget-control':       'clickReveal',
+                'inview':                             'inview',
+                'click .reveal-popup-open' :          'openPopup'
             }
         },
 
@@ -41,7 +41,7 @@ define(function(require) {
             this.$('div.reveal-widget-item-text').addClass('reveal-' + direction);
 
             this.$('div.reveal-widget-item-text-body').addClass('reveal-' + direction);
-            this.$('.reveal-widget-icon').addClass('icon-arrow-' + this.getOppositeDirection(direction));
+            this.$('.reveal-widget-icon').addClass('icon-controls-' + this.getOppositeDirection(direction));
 
             this.model.set('_direction', direction);
             this.model.set('_active', true);
@@ -93,19 +93,23 @@ define(function(require) {
             }
 
             // On mobile, Check for items with long text. We'll provide a popup for these
-            var charLimit = 50;
+            var CHAR_LIMIT = 50;
             var first = this.model.get('first');
             var second = this.model.get('second');
-            var firstCharLimit = first._maxCharacters || charLimit;
-            var secondCharLimit = second._maxCharacters || charLimit;
+            var firstCharLimit = first._maxCharacters || CHAR_LIMIT;
+            var secondCharLimit = second._maxCharacters || CHAR_LIMIT;
             var firstHasPopup = first.body && first.body.length > firstCharLimit;
             var secondHasPopup = second.body && second.body.length > secondCharLimit;
 
             if (firstHasPopup) {
-                this.model.set('_firstShortText', first.body.substring(0, firstCharLimit) + '...');
+                if (first.body) {
+                    this.model.set('_firstShortText', $(first.body).substring(0, firstCharLimit) + '...');
+                }
             }
             if (secondHasPopup) {
-                this.model.set('_secondShortText', second.body.substring(0, secondCharLimit) + '...');
+                if (second.body) {
+                    this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
+                }
             }
             if (Adapt.device.screenSize === 'small') {
                 this.model.set('_displayFirstShortText', firstHasPopup);
@@ -155,15 +159,7 @@ define(function(require) {
         },
 
         getOppositeDirection: function(direction) {
-            switch(direction) {
-                case 'left':
-                    oppositeDirection = 'right';
-                    break;
-                case 'right':
-                    oppositeDirection = 'left';
-                    break;
-            }
-            return oppositeDirection;
+          return (direction == 'left') ? 'right' : 'left';
         },
 
         clickReveal: function (event) {
@@ -177,7 +173,7 @@ define(function(require) {
             var controlAnimation = {}, sliderAnimation = {};
             var classToAdd;
             var classToRemove;
-            
+
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
                 // reveal second
@@ -185,8 +181,8 @@ define(function(require) {
                 this.$('.reveal-widget').addClass('reveal-showing');
 
                 controlAnimation[direction] = operator + controlMovement;
-                classToAdd = 'icon-arrow-' + direction;
-                classToRemove = 'icon-arrow-' + this.getOppositeDirection(direction);
+                classToAdd = 'icon-controls-' + direction;
+                classToRemove = 'icon-controls-' + this.getOppositeDirection(direction);
 
                 sliderAnimation['margin-left'] = (direction == 'left') ? 0 : -scrollWidth;
 
@@ -197,8 +193,8 @@ define(function(require) {
                 this.$('.reveal-widget').removeClass('reveal-showing');
 
                 controlAnimation[direction] = 0;
-                classToAdd = 'icon-arrow-' + this.getOppositeDirection(direction);
-                classToRemove = 'icon-arrow-' + direction;
+                classToAdd = 'icon-controls-' + this.getOppositeDirection(direction);
+                classToRemove = 'icon-controls-' + direction;
 
                 sliderAnimation['margin-left'] = (direction == 'left') ? operator + controlMovement : 0
             }
