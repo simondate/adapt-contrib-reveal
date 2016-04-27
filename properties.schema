@@ -53,6 +53,7 @@
         "_maxCharacters": {
           "type":"number",
           "required":false,
+          "default": 50,
           "title": "Maximum characters to display on overlay",
           "inputType": "Number",
           "validators": ["number"],
