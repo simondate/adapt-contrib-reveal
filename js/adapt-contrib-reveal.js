@@ -97,7 +97,7 @@ define(function(require) {
             var first = this.model.get('first');
             var second = this.model.get('second');
             
-            if (typeof first === 'undefined' && typeof second === 'undefined') {
+            if (typeof first === 'undefined' || typeof second === 'undefined') {
                 return false;
             }
            
