@@ -96,6 +96,11 @@ define(function(require) {
             var CHAR_LIMIT = 50;
             var first = this.model.get('first');
             var second = this.model.get('second');
+            
+            if (typeof first === 'undefined' || typeof second === 'undefined') {
+                return false;
+            }
+           
             var firstCharLimit = first._maxCharacters || CHAR_LIMIT;
             var secondCharLimit = second._maxCharacters || CHAR_LIMIT;
             var firstHasPopup = first.body && first.body.length > firstCharLimit;
