@@ -11,6 +11,14 @@
       "default": "full-width",
       "editorOnly": true
     },
+    "instruction": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "This is the instruction text"
+    },
     "_direction": {
       "type": "string",
       "required": true,
