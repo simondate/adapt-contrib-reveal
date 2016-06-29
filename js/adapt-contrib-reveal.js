@@ -116,7 +116,7 @@ define(function(require) {
                     this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
                 }
             }
-            if (Adapt.device.touch && Adapt.device.screenWidth <= 768) {
+            if (Adapt.device.screenSize != 'large') {
                 this.model.set('_displayFirstShortText', firstHasPopup);
                 this.model.set('_displaySecondShortText', secondHasPopup);
                 if (firstHasPopup) {
