@@ -187,13 +187,15 @@ define(function(require) {
         resizeControl: function() {
             var direction = this.model.get('_direction');
             var orientation = this.getOrientation(direction);
+            var imageSize;
+            var controlSize;
 
             if (this.isHorizontal(direction)) {
-                var imageSize = this.$('.reveal-widget').width();
-                var controlSize = this.$('.reveal-widget-control').width();
+                imageSize = this.$('.reveal-widget').width();
+                controlSize = this.$('.reveal-widget-control').width();
             } else {
-                var imageSize = this.$('.reveal-widget').height();
-                var controlSize = this.$('.reveal-widget-control').height();
+                imageSize = this.$('.reveal-widget').height();
+                controlSize = this.$('.reveal-widget-control').height();
             }
 
             var sliderAnimation = {};
