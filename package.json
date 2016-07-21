@@ -1,6 +1,6 @@
 {
   "name": "adapt-contrib-reveal",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "A component which allows alternating images and/or text to be revealed",
   "main": "",
   "scripts": {
