@@ -25,9 +25,22 @@ define(function(require) {
         },
 
         preRender: function() {
+            var orientation;
             this.listenTo(Adapt, 'pageView:ready', this.setupReveal, this);
             this.listenTo(Adapt, 'device:resize', this.resizeControl, this);
             this.listenTo(Adapt, 'device:changed', this.setDeviceSize, this);
+
+            switch (this.model.get('_direction')) {
+                case 'left':
+                case 'right':
+                    orientation = 'horizontal';
+                    break;
+                case 'top':
+                case 'bottom':
+                    orientation = 'vertical';
+            }
+
+            this.model.set('_orientation', orientation);
 
             this.setDeviceSize();
         },
@@ -51,20 +64,20 @@ define(function(require) {
 
             this.setControlText(false);
 
-            if (this.isHorizontal(direction)) {
+            if (this.model.get('_orientation') === 'horizontal') {
                 this.calculateWidths();
             } else {
                 this.calculateHeights();
             }
         },
 
-        isHorizontal: function(direction) {
-            return (direction == 'left' || direction == 'right');
-        },
+        // isHorizontal: function(direction) {
+        //     return (direction == 'left' || direction == 'right');
+        // },
 
-        isVertical: function(direction) {
-            return (direction == 'top' || direction == 'bottom');
-        },
+        // isVertical: function(direction) {
+        //     return (direction == 'top' || direction == 'bottom');
+        // },
 
         setControlText: function(isRevealed) {
             if (this.model.get('_control')) {
@@ -132,8 +145,8 @@ define(function(require) {
             this.model.set('_controlWidth', controlHeight);
         },
 
-        getOrientation: function(direction) {
-            return this.isHorizontal(direction) ? 'left' : 'top';
+        getMarginType: function() {
+            return this.model.get('_orientation') == 'horizontal' ? 'left' : 'top';
         },
 
         setDeviceSize: function() {
@@ -192,12 +205,12 @@ define(function(require) {
 
         resizeControl: function() {
             var direction = this.model.get('_direction');
-            var orientation = this.getOrientation(direction);
+            var marginType = this.getMarginType();
             var $slider = this.$('.reveal-widget-slider');
             var imageSize;
             var controlSize;
 
-            if (this.isHorizontal(direction)) {
+            if (this.model.get('_orientation') == 'horizontal') {
                 imageSize = this.$('.reveal-widget').width();
                 controlSize = this.$('.reveal-widget-control').width();
             } else {
@@ -208,11 +221,11 @@ define(function(require) {
             var sliderAnimation = {};
 
             if (this.model.get('_revealed')) {
-                $slider.css('margin-' + orientation, (direction == orientation) ? -imageSize : 0);
-                sliderAnimation['margin-' + orientation] = (direction == orientation) ? 0 :  -imageSize
+                $slider.css('margin-' + marginType, (direction == marginType) ? -imageSize : 0);
+                sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 :  -imageSize
                 $slider.animate(sliderAnimation);
             } else {
-                $slider.css('margin-' + orientation, (direction == orientation) ? imageSize : 0);
+                $slider.css('margin-' + marginType, (direction == marginType) ? imageSize : 0);
             }
 
             $slider.css('width', 2 * imageSize);
@@ -229,17 +242,18 @@ define(function(require) {
         },
 
         getOppositeDirection: function(direction) {
-            if (this.isHorizontal(direction)) {
-                return (direction == 'left') ? 'right' : 'left';
-            } else if (this.isVertical(direction)) {
-                return (direction == 'top') ? 'bottom' : 'top';
-            } else {
-                return (direction == 'up') ? 'down' : 'up';
-            }
+            var o = {
+                'left': 'right',
+                'right': 'left',
+                'up': 'down',
+                'down': 'up'
+            };
+
+            return o[direction];
         },
 
         getIconDirection: function(direction) {
-            if (this.isVertical(direction)) {
+            if (this.model.get('_orientation') == 'vertical') {
                 return (direction == 'top') ? 'up' : 'down';
             } else {
                 return direction;
@@ -250,7 +264,7 @@ define(function(require) {
             event.preventDefault();
 
             var direction = this.model.get('_direction');
-            var orientation = this.getOrientation(direction);
+            var marginType = this.getMarginType();
             var scrollWidth = this.model.get('_scrollWidth');
             var controlWidth = this.model.get('_controlWidth');
             var controlMovement = (!this.model.get('_revealed')) ? scrollWidth - controlWidth : scrollWidth;
@@ -271,7 +285,7 @@ define(function(require) {
                 classToAdd = 'icon-controls-' + iconDirection;
                 classToRemove = 'icon-controls-' + this.getOppositeDirection(iconDirection);
 
-                sliderAnimation['margin-' + orientation] = (direction == orientation) ? 0 : -scrollWidth;
+                sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 : -scrollWidth;
 
                 this.setCompletionStatus();
             } else {
@@ -283,7 +297,7 @@ define(function(require) {
                 classToAdd = 'icon-controls-' + this.getOppositeDirection(iconDirection);
                 classToRemove = 'icon-controls-' + iconDirection
                 
-                sliderAnimation['margin-' + orientation] = (direction == orientation) ? operator + controlMovement : 0;
+                sliderAnimation['margin-' + marginType] = (direction == marginType) ? operator + controlMovement : 0;
             }
             // Change the UI to handle the new state
             this.$('.reveal-widget-slider').animate(sliderAnimation);
