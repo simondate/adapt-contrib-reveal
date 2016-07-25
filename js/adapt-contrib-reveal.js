@@ -24,6 +24,11 @@ define(function(require) {
             }
         },
 
+        orientationStates: {
+            Vertical: 'vertical',
+            Horizontal: 'horizontal'
+        },
+
         preRender: function() {
             var orientation;
             this.listenTo(Adapt, 'pageView:ready', this.setupReveal, this);
@@ -33,11 +38,11 @@ define(function(require) {
             switch (this.model.get('_direction')) {
                 case 'left':
                 case 'right':
-                    orientation = 'horizontal';
+                    orientation = this.orientationStates.Horizontal;
                     break;
                 case 'top':
                 case 'bottom':
-                    orientation = 'vertical';
+                    orientation = this.orientationStates.Vertical;
             }
 
             this.model.set('_orientation', orientation);
@@ -64,7 +69,7 @@ define(function(require) {
 
             this.setControlText(false);
 
-            if (this.model.get('_orientation') === 'horizontal') {
+            if (this.model.get('_orientation') === this.orientationStates.Horizontal) {
                 this.calculateWidths();
             } else {
                 this.calculateHeights();
@@ -138,7 +143,7 @@ define(function(require) {
         },
 
         getMarginType: function() {
-            return this.model.get('_orientation') == 'horizontal' ? 'left' : 'top';
+            return this.model.get('_orientation') == this.orientationStates.Horizontal ? 'left' : 'top';
         },
 
         setDeviceSize: function() {
@@ -202,7 +207,7 @@ define(function(require) {
             var imageSize;
             var controlSize;
 
-            if (this.model.get('_orientation') == 'horizontal') {
+            if (this.model.get('_orientation') == this.orientationStates.Horizontal) {
                 imageSize = this.$('.reveal-widget').width();
                 controlSize = this.$('.reveal-widget-control').width();
             } else {
@@ -245,7 +250,7 @@ define(function(require) {
         },
 
         getIconDirection: function(direction) {
-            if (this.model.get('_orientation') == 'vertical') {
+            if (this.model.get('_orientation') == this.orientationStates.Vertical) {
                 return (direction == 'top') ? 'up' : 'down';
             } else {
                 return direction;
