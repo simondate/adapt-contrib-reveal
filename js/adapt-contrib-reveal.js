@@ -71,14 +71,6 @@ define(function(require) {
             }
         },
 
-        // isHorizontal: function(direction) {
-        //     return (direction == 'left' || direction == 'right');
-        // },
-
-        // isVertical: function(direction) {
-        //     return (direction == 'top' || direction == 'bottom');
-        // },
-
         setControlText: function(isRevealed) {
             if (this.model.get('_control')) {
                 if (!isRevealed && this.model.get('control').showText) {
