@@ -25,7 +25,7 @@
       "enum": ["left", "right"],
       "default": "left",
       "title": "Direction",
-      "inputType": {"type": "Select", "options":["left", "right"]},
+      "inputType": {"type": "Select", "options":["left", "right", "top", "bottom"]},
       "validators": ["required"],
       "help": "Indicates the direction content will be revealed from"
     },
