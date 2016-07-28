@@ -136,7 +136,7 @@ define(function(require) {
 
             $slider.css('margin-' + direction, margin);
             // Ensure the text doesn't overflow the image
-            this.$('div.reveal-widget-item-text').css('height', ($('img.reveal-image').height() - 80));
+            this.$('div.reveal-widget-item-text').css('height', imageHeight / 2);
 
             this.model.set('_scrollWidth', imageHeight / 2);
             this.model.set('_controlWidth', controlHeight);
