@@ -49,7 +49,7 @@ define(function(require) {
 
             this.setDeviceSize();
         },
-
+        
         setupReveal: function() {
             var direction = !this.model.get('_direction') ? "left" : this.model.get('_direction');
             var iconDirection = this.getIconDirection(direction);
@@ -118,27 +118,22 @@ define(function(require) {
 
             // Cache the JQuery objects
             var $widget = this.$('.reveal-widget');
+            var $image = this.$('.reveal-widget img');
             var $slider = this.$('.reveal-widget-slider');
             var $control = this.$('.reveal-widget-control');
 
-            var imageHeight = $widget.height();
+            var imageHeight = $image.height();
             var controlHeight = $control.height();
-            var margin = !this.model.get('_revealed') 
-                ? -imageHeight / 2
-                : -imageHeight;
+            var margin = -imageHeight;
 
-            $widget.css('height', imageHeight / 2);
+            $widget.css('height', imageHeight);
             $slider.css('height', imageHeight);
-
-            if (this.model.get('_revealed')) {
-              $control.css(this.model.get('_direction'), imageHeight - controlHeight)
-            }
 
             $slider.css('margin-' + direction, margin);
             // Ensure the text doesn't overflow the image
-            this.$('div.reveal-widget-item-text').css('height', imageHeight / 2);
+            this.$('div.reveal-widget-item-text').css('height', imageHeight);
 
-            this.model.set('_scrollWidth', imageHeight / 2);
+            this.model.set('_scrollWidth', imageHeight);
             this.model.set('_controlWidth', controlHeight);
         },
 
@@ -203,17 +198,24 @@ define(function(require) {
         resizeControl: function() {
             var direction = this.model.get('_direction');
             var marginType = this.getMarginType();
+            var $widget = this.$('.reveal-widget');
             var $slider = this.$('.reveal-widget-slider');
             var imageSize;
             var controlSize;
-
+            
             if (this.model.get('_orientation') == this.orientationStates.Horizontal) {
-                imageSize = this.$('.reveal-widget').width();
+                imageSize = $widget.width();
                 controlSize = this.$('.reveal-widget-control').width();
+                $widget.css('width', imageSize);
+                $slider.css('width',  imageSize * 2);
             } else {
-                imageSize = this.$('.reveal-widget').height();
+                imageSize = this.$('.reveal-widget img').height();
                 controlSize = this.$('.reveal-widget-control').height();
+                $widget.css('height', imageSize);
+                $slider.css('height',  imageSize);
             }
+                        
+            $slider.css('margin-' + direction, -imageSize);
 
             var sliderAnimation = {};
 
@@ -225,8 +227,6 @@ define(function(require) {
                 $slider.css('margin-' + marginType, (direction == marginType) ? imageSize : 0);
             }
 
-            $slider.css('width', 2 * imageSize);
-            $slider.css('margin-' + direction, -imageSize);
             
             this.model.set('_scrollWidth', imageSize);
             this.model.set('_controlWidth', controlSize);

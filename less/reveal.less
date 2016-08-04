@@ -34,9 +34,9 @@
         float: right;
         width: 50%;
     }
-
+    
     .reveal-image {
-        display: inline-block;
+        display: block;
     }
 
     .reveal-image.reveal-right {
@@ -98,6 +98,8 @@ div.reveal-widget-item-text {
     position: absolute;
     width: 100% !important;
     height: 100%;
+    top: 0;
+    z-index: 1;
 
    &.reveal-left {
         left: 0;
@@ -140,7 +142,6 @@ div.reveal-widget-item-text-body {
   &.reveal-top {
     z-index: 1;
     position: absolute;
-    top: -100% !important;
     bottom: 0;
 
     p { margin-top: 40px; }
@@ -149,7 +150,6 @@ div.reveal-widget-item-text-body {
   &.reveal-bottom {
     z-index: 1;
     position: absolute;
-    top: -100% !important;
     bottom: auto;
   }
 }
