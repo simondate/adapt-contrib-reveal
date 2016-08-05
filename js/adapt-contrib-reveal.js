@@ -109,7 +109,7 @@ define(function(require) {
             // Ensure the text doesn't overflow the image
             this.$('div.reveal-widget-item-text').css('width', ($('img.reveal-image').width() - 80));
             
-            this.model.set('_scrollWidth', imageWidth);
+            this.model.set('_scrollSize', imageWidth);
             this.model.set('_controlWidth', controlWidth);
         },
 
@@ -133,7 +133,7 @@ define(function(require) {
             // Ensure the text doesn't overflow the image
             this.$('div.reveal-widget-item-text').css('height', imageHeight);
 
-            this.model.set('_scrollWidth', imageHeight);
+            this.model.set('_scrollSize', imageHeight);
             this.model.set('_controlWidth', controlHeight);
         },
 
@@ -228,7 +228,7 @@ define(function(require) {
             }
 
             
-            this.model.set('_scrollWidth', imageSize);
+            this.model.set('_scrollSize', imageSize);
             this.model.set('_controlWidth', controlSize);
         },
 
@@ -262,9 +262,9 @@ define(function(require) {
 
             var direction = this.model.get('_direction');
             var marginType = this.getMarginType();
-            var scrollWidth = this.model.get('_scrollWidth');
+            var scrollSize = this.model.get('_scrollSize');
             var controlWidth = this.model.get('_controlWidth');
-            var controlMovement = (!this.model.get('_revealed')) ? scrollWidth - controlWidth : scrollWidth;
+            var controlMovement = (!this.model.get('_revealed')) ? scrollSize - controlWidth : scrollSize;
             var operator = !this.model.get('_revealed') ? '+=' : '-=';
             var iconDirection = this.getIconDirection(direction);
             var controlAnimation = {};
@@ -282,7 +282,7 @@ define(function(require) {
                 classToAdd = 'icon-controls-' + iconDirection;
                 classToRemove = 'icon-controls-' + this.getOppositeDirection(iconDirection);
 
-                sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 : -scrollWidth;
+                sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 : -scrollSize;
 
                 this.setCompletionStatus();
             } else {
