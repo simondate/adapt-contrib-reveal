@@ -38,7 +38,7 @@
           "type": "string",
           "required": false,
           "title": "Label for 'hide' text",
-          "default": "",
+          "default": "Hide",
           "inputType": "Text",
           "validators": [],
           "help": "Text which when clicked hides the reveal"
@@ -47,7 +47,7 @@
           "type": "string",
           "required": false,
           "title": "Label for 'show' text",
-          "default": "",
+          "default": "Show",
           "inputType": "Text",
           "validators": [],
           "help": "Text which when clicked shows the reveal"
@@ -58,14 +58,23 @@
       "type":"object",
       "required":true,
       "properties":{
-        "_maxCharacters": {
-          "type":"number",
+        "title": {
+          "type":"string",
           "required":false,
-          "default": 50,
-          "title": "Maximum characters to display on overlay",
-          "inputType": "Number",
-          "validators": ["number"],
-          "help": "Number of characters to display before clipping the text on mobile devices"
+          "title": "Title",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Title of the initial item"
+        },
+        "src": {
+          "type":"string",
+          "required":false,
+          "default": "",
+          "title": "Initial image",
+          "inputType": "Asset:image",
+          "validators": ["required"],
+          "help": "Image to be displayed intially"
         },
         "alt": {
           "type":"string",
@@ -85,6 +94,15 @@
           "validators": [],
           "help": "Initial text to be displayed over the image"
         },
+        "_maxCharacters": {
+          "type":"number",
+          "required":false,
+          "default": 50,
+          "title": "Maximum characters to display on overlay",
+          "inputType": "Number",
+          "validators": ["number"],
+          "help": "Number of characters to display before clipping the text on mobile devices"
+        },
         "moreText": {
           "type":"string",
           "required":false,
@@ -93,24 +111,6 @@
           "inputType": "Text",
           "validators": [],
           "help": "Text which is placed in the link for 'more' text"
-        },
-        "src": {
-          "type":"string",
-          "required":false,
-          "default": "",
-          "title": "Initial image",
-          "inputType": "Asset:image",
-          "validators": ["required"],
-          "help": "Image to be displayed intially"
-        },
-        "title": {
-          "type":"string",
-          "required":false,
-          "title": "Title",
-          "default": "",
-          "inputType": "Text",
-          "validators": [],
-          "help": "Title of the initial item"
         }
       }
     },
@@ -118,13 +118,23 @@
       "type":"object",
       "required":true,
       "properties":{
-        "_maxCharacters": {
-          "type":"number",
+        "title": {
+          "type":"string",
           "required":false,
-          "title": "Maximum characters to display on overlay",
-          "inputType": "Number",
-          "validators": ["number"],
-          "help": "Number of characters to display before clipping the text on mobile devices"
+          "title": "Title",
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "Title of the revealed item"
+        },
+        "src": {
+          "type":"string",
+          "required":false,
+          "default": "",
+          "title": "Revealed image",
+          "inputType": "Asset:image",
+          "validators": ["required"],
+          "help": "Image to be displayed on reveal"
         },
         "alt": {
           "type":"string",
@@ -144,6 +154,14 @@
           "validators": [],
           "help": "Text which will be displayed on reveal"
         },
+        "_maxCharacters": {
+          "type":"number",
+          "required":false,
+          "title": "Maximum characters to display on overlay",
+          "inputType": "Number",
+          "validators": ["number"],
+          "help": "Number of characters to display before clipping the text on mobile devices"
+        },
         "moreText": {
           "type":"string",
           "required":false,
@@ -152,24 +170,6 @@
           "inputType": "Text",
           "validators": [],
           "help": "Text which is placed in the link for 'more' text"
-        },
-        "src": {
-          "type":"string",
-          "required":false,
-          "default": "",
-          "title": "Revealed image",
-          "inputType": "Asset:image",
-          "validators": ["required"],
-          "help": "Image to be displayed on reveal"
-        },
-        "title": {
-          "type":"string",
-          "required":false,
-          "title": "Title",
-          "default": "",
-          "inputType": "Text",
-          "validators": [],
-          "help": "Title of the revealed item"
         }
       }
     }
