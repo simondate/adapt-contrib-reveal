@@ -33,6 +33,7 @@
       "type":"object",
       "required":false,
       "title": "Control (optional)",
+      "help": "Reveal toggle button.",
       "properties":{
         "hideText": {
           "type": "string",
@@ -53,6 +54,15 @@
           "help": "Text which when clicked shows the reveal"
         }
       }
+    },
+    "toggleLabel": {
+      "type": "string",
+      "required": false,
+      "title": "Reveal toggle button."
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "This is the instruction text"
     },
     "first": {
       "type":"object",

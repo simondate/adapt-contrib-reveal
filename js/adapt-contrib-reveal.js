@@ -63,11 +63,19 @@ define(function(require) {
             this.$('div.reveal-widget-item-text-body').addClass('reveal-' + direction);
             this.$('.reveal-widget-icon').addClass('icon-controls-' + this.getOppositeDirection(iconDirection));
 
+            // Change accessibility tab index on page load. 
+            this.$('.second .reveal-widget-item-text-body .accessible-text-block').attr('tabindex', '-1');
+
             this.model.set('_direction', direction);
             this.model.set('_active', true);
             this.model.set('_revealed', false);
 
             this.setControlText(false);
+
+            // Reverse reveal item order for the reveal bottom component.
+            if (direction == "bottom") {
+                $($('.reveal-widget-item-text.first.reveal-bottom').parent()).insertBefore($('.reveal-widget-item-text.second.reveal-bottom').parent());
+            }
 
             if (this.model.get('_orientation') === this.orientationStates.Horizontal) {
                 this.calculateWidths();
@@ -124,12 +132,21 @@ define(function(require) {
 
             var imageHeight = $image.height();
             var controlHeight = $control.height();
-            var margin = -imageHeight;
+            var margin = direction == "top" ? -imageHeight : imageHeight;
 
             $widget.css('height', imageHeight);
             $slider.css('height', imageHeight);
 
-            $slider.css('margin-' + direction, margin);
+            if (this.model.get('_revealed')) {
+               $control.css(this.model.get('_direction'), imageHeight - controlHeight)
+            }
+
+            if (direction == 'bottom') {
+                $slider.css('margin-top', 0);
+            } else {
+                $slider.css('margin-' + direction, margin);
+            }
+
             // Ensure the text doesn't overflow the image
             this.$('div.reveal-widget-item-text').css('height', imageHeight);
 
@@ -214,8 +231,13 @@ define(function(require) {
                 $widget.css('height', imageSize);
                 $slider.css('height',  imageSize);
             }
-                        
-            $slider.css('margin-' + direction, -imageSize);
+
+            if (direction == 'bottom') {
+                $slider.css('margin-top', -imageSize);
+                
+            } else {
+                $slider.css('margin-' + direction, -imageSize);
+            }         
 
             var sliderAnimation = {};
 
@@ -272,11 +294,18 @@ define(function(require) {
             var classToAdd;
             var classToRemove;
 
+            // Clear all disabled accessibility settings 
+            this.$('.reveal-widget-item-text-body').removeClass('a11y-ignore').removeAttr('aria-hidden').removeAttr('tab-index'); 
+
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
                 // reveal second
                 this.model.set('_revealed', true);
-                this.$('.reveal-widget').addClass('reveal-showing');
+
+                // Modify accessibility tab index and classes to prevent hidden elements from being read before visible elements.
+                this.$('.first .reveal-widget-item-text-body').addClass('a11y-ignore').attr('aria-hidden', 'true').attr('tabindex', '-1');
+                this.$('.second .reveal-widget-item-text-body .accessible-text-block').attr('tabindex', '0');
+                this.$('.first .reveal-widget-item-text-body .accessible-text-block').attr('tabindex', '-1');
 
                 controlAnimation[direction] = operator + controlMovement;
                 classToAdd = 'icon-controls-' + iconDirection;
@@ -290,10 +319,15 @@ define(function(require) {
                 this.model.set('_revealed', false);
                 this.$('.reveal-widget').removeClass('reveal-showing');
 
+                // Modify accessibility tab index to prevent hidden elements from being read before visible elements.
+                this.$('.second .reveal-widget-item-text-body').addClass('a11y-ignore').attr('aria-hidden', 'true').attr('tabindex', '-1');
+                this.$('.first .reveal-widget-item-text-body .accessible-text-block').attr('tabindex', '0');
+                this.$('.second .reveal-widget-item-text-body .accessible-text-block').attr('tabindex', '-1');
+
                 controlAnimation[direction] = 0;
                 classToAdd = 'icon-controls-' + this.getOppositeDirection(iconDirection);
                 classToRemove = 'icon-controls-' + iconDirection
-                
+
                 sliderAnimation['margin-' + marginType] = (direction == marginType) ? operator + controlMovement : 0;
             }
             // Change the UI to handle the new state
