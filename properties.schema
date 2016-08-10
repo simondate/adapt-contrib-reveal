@@ -33,7 +33,6 @@
       "type":"object",
       "required":false,
       "title": "Control (optional)",
-      "help": "Reveal toggle button.",
       "properties":{
         "hideText": {
           "type": "string",
@@ -58,8 +57,8 @@
     "toggleLabel": {
       "type": "string",
       "required": false,
-      "title": "Reveal toggle button."
-      "default": "",
+      "title": "Toggle control accessibility label"
+      "default": "Reveal toggle button.",
       "inputType": "Text",
       "validators": [],
       "help": "This is the instruction text"

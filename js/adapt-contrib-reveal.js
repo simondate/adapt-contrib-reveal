@@ -234,7 +234,6 @@ define(function(require) {
 
             if (direction == 'bottom') {
                 $slider.css('margin-top', -imageSize);
-                
             } else {
                 $slider.css('margin-' + direction, -imageSize);
             }         
@@ -301,6 +300,7 @@ define(function(require) {
             if (!this.model.get('_revealed')) {
                 // reveal second
                 this.model.set('_revealed', true);
+                this.$('.reveal-widget').addClass('reveal-showing');
 
                 // Modify accessibility tab index and classes to prevent hidden elements from being read before visible elements.
                 this.$('.first .reveal-widget-item-text-body').addClass('a11y-ignore').attr('aria-hidden', 'true').attr('tabindex', '-1');
