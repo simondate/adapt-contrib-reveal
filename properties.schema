@@ -3,6 +3,16 @@
   "$schema": "http://json-schema.org/draft-03/schema",
   "id": "http://jsonschema.net",
   "$ref": "http://localhost/plugins/content/component/model.schema",
+  "globals": {
+    "ariaLabel": {
+      "type": "string",
+      "required": false,
+      "default": "Reveal toggle button.",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
+    }
+  },
   "properties":{
     "_supportedLayout": {
       "type": "string",
@@ -53,15 +63,6 @@
           "help": "Text which when clicked shows the reveal"
         }
       }
-    },
-    "toggleLabel": {
-      "type": "string",
-      "required": false,
-      "title": "Toggle control accessibility label"
-      "default": "Reveal toggle button.",
-      "inputType": "Text",
-      "validators": [],
-      "help": "This is the instruction text"
     },
     "first": {
       "type":"object",
