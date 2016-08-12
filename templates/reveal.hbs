@@ -1,33 +1,34 @@
 <div class="reveal-inner component-inner">
     {{> component this}}
     <div class="reveal-widget reveal-component component-widget">
-        <div class="reveal-widget-slider">
+        <div class="reveal-widget-slider" tabindex="1">
+            <a href="#" class="reveal-widget-control" aria-label="{{_globals._components._reveal.ariaLabel}}"><div class="reveal-widget-icon icon"></div></a>
             <div class="reveal-widget-item">
                 {{#if second.src}}
                     <img src="{{second.src}}" class="reveal-image" alt="{{second.alt}}" title="{{second.title}}"/>
                 {{/if}}
                 {{#if second.body}}
                     <div class="reveal-widget-item-text second">
-                        <div class="reveal-widget-item-text-body reveal-second-long {{#if _displaySecondShortText }}reveal-hidden{{/if}}">
-                            {{{second.body}}}
+                        <div class="reveal-widget-item-text-body reveal-second-long {{#if _displaySecondShortText }}reveal-hidden{{/if}}" class="a11y-ignore" aria-hidden="true" tab-index="-1">
+                            {{{a11y_text second.body}}}
                         </div>
                         <div class="reveal-widget-item-text-body reveal-second-short {{#unless _displaySecondShortText }}reveal-hidden{{/unless}}">
                             {{{_secondShortText}}}                            
-                              <div class="reveal-link-text">
+                            <div class="reveal-link-text">
                                 <a href="#" class="reveal-popup-open" tabindex="-1">{{#if second.moreText}}{{second.moreText}}{{else}}More{{/if}}</a>
-                              </div>
+                            </div>
                         </div>
                     </div>
                 {{/if}}
             </div>
-            <div class="reveal-widget-item">
+            <div class="reveal-widget-item" tabindex="2">
                 {{#if first.src}}
                     <img src="{{first.src}}" class="reveal-image" alt="{{first.alt}}" title="{{first.title}}"/>
                 {{/if}}
                 {{#if first.body}}
                     <div class="reveal-widget-item-text first">
                         <div class="reveal-widget-item-text-body reveal-first-long {{#if _displayFirstShortText }}reveal-hidden{{/if}}">
-                            {{{first.body}}}
+                            {{{a11y_text first.body}}}
                         </div>
                         <div class="reveal-widget-item-text-body reveal-first-short {{#unless _displayFirstShortText }}reveal-hidden{{/unless}}">
                             {{{_firstShortText}}}
@@ -39,6 +40,5 @@
                 {{/if}}
             </div>
         </div>
-        <a href="#" class="reveal-widget-control"><div class="reveal-widget-icon icon"></div></a>
-    </div>
+    </div>  
 </div>
