@@ -148,7 +148,11 @@ define(function(require) {
             }
 
             // Ensure the text doesn't overflow the image
-            this.$('div.reveal-widget-item-text').css('height', imageHeight);
+            if ($("html").hasClass("ie9") || $("html").hasClass("ie10")) {
+                this.$('div.reveal-widget-item-text').attr("style", "height: " + imageHeight);
+            } else {
+                this.$('div.reveal-widget-item-text').attr("style", "height: " + imageHeight);
+            }
 
             this.model.set('_scrollSize', imageHeight);
             this.model.set('_controlWidth', controlHeight);
