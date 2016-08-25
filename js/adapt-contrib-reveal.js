@@ -31,7 +31,6 @@ define(function(require) {
 
         preRender: function() {
             var orientation;
-            this.listenTo(Adapt, 'pageView:ready', this.setupReveal, this);
             this.listenTo(Adapt, 'device:resize', this.resizeControl, this);
             this.listenTo(Adapt, 'device:changed', this.setDeviceSize, this);
 
@@ -74,7 +73,7 @@ define(function(require) {
 
             // Reverse reveal item order for the reveal bottom component.
             if (direction == "bottom") {
-                $($('.reveal-widget-item-text.first.reveal-bottom').parent()).insertBefore($('.reveal-widget-item-text.second.reveal-bottom').parent());
+                $(this.$('.reveal-widget-item-text.first.reveal-bottom').parent()).insertBefore(this.$('.reveal-widget-item-text.second.reveal-bottom').parent());
             }
 
             if (this.model.get('_orientation') === this.orientationStates.Horizontal) {
@@ -109,7 +108,7 @@ define(function(require) {
             $slider.css('width', imageWidth * 2);
 
             if (this.model.get('_revealed')) {
-                $control.css(this.model.get('_direction'), imageWidth - controlWidth)
+                $control.css(this.model.get('_direction'), imageWidth - controlWidth);
             }
 
             $slider.css('margin-' + direction, margin);
@@ -129,7 +128,6 @@ define(function(require) {
             var $image = this.$('.reveal-widget img');
             var $slider = this.$('.reveal-widget-slider');
             var $control = this.$('.reveal-widget-control');
-
             var imageHeight = $image.height();
             var controlHeight = $control.height();
             var margin = direction == "top" ? -imageHeight : imageHeight;
@@ -138,7 +136,7 @@ define(function(require) {
             $slider.css('height', imageHeight);
 
             if (this.model.get('_revealed')) {
-               $control.css(this.model.get('_direction'), imageHeight - controlHeight)
+               $control.css(this.model.get('_direction'), imageHeight - controlHeight);
             }
 
             if (direction == 'bottom') {
@@ -148,7 +146,7 @@ define(function(require) {
             }
 
             // Ensure the text doesn't overflow the image
-            this.$('div.reveal-widget-item-text').css('height', imageHeight);
+            this.$('div.reveal-widget-item-text').css("height", imageHeight);
 
             this.model.set('_scrollSize', imageHeight);
             this.model.set('_controlWidth', controlHeight);
@@ -255,7 +253,20 @@ define(function(require) {
 
         postRender: function () {
             this.$('.reveal-widget').imageready(_.bind(function() {
-                this.setReadyStatus();
+                // IE hack - IE10/11 doesnt play nice with image sizes but it works on IE 9 which is nice. Because the universe doesnt make sense.
+                if ($('html').hasClass('ie version-10.0') || $('html').hasClass('ie version-11.0')) {
+
+                    var self = this;
+                    
+                    _.delay(function() {
+                        self.setupReveal();
+                        self.setReadyStatus();
+                    }, 400);
+
+                } else {
+                    this.setupReveal();
+                    this.setReadyStatus();
+                }
             }, this));
         },
 
