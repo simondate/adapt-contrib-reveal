@@ -9,14 +9,11 @@
                 {{/if}}
                 {{#if second.body}}
                     <div class="reveal-widget-item-text second">
-                        <div class="reveal-widget-item-text-body reveal-second-long {{#if _displaySecondShortText }}reveal-hidden{{/if}}" class="a11y-ignore" aria-hidden="true" tab-index="-1">
-                            {{{a11y_text second.body}}}
+                        <div class="reveal-widget-item-text-body reveal-second-long" class="a11y-ignore" aria-hidden="true" tab-index="-1">
+                            {{{a11y_text second.body}}}                          
                         </div>
-                        <div class="reveal-widget-item-text-body reveal-second-short {{#unless _displaySecondShortText }}reveal-hidden{{/unless}}">
-                            {{{_secondShortText}}}                            
-                            <div class="reveal-link-text">
-                                <a href="#" class="reveal-popup-open" tabindex="-1">{{#if second.moreText}}{{second.moreText}}{{else}}More{{/if}}</a>
-                            </div>
+                        <div class="reveal-link-text reveal-hidden">
+                            <a href="#" class="reveal-popup-open" tabindex="-1">More</a>
                         </div>
                     </div>
                 {{/if}}
@@ -27,14 +24,11 @@
                 {{/if}}
                 {{#if first.body}}
                     <div class="reveal-widget-item-text first">
-                        <div class="reveal-widget-item-text-body reveal-first-long {{#if _displayFirstShortText }}reveal-hidden{{/if}}">
+                        <div class="reveal-widget-item-text-body reveal-first-long">
                             {{{a11y_text first.body}}}
                         </div>
-                        <div class="reveal-widget-item-text-body reveal-first-short {{#unless _displayFirstShortText }}reveal-hidden{{/unless}}">
-                            {{{_firstShortText}}}
-                            <div class="reveal-link-text">
-                              <a href="#" class="reveal-popup-open" tabindex="-1">{{#if first.moreText}}{{first.moreText}}{{else}}More{{/if}}</a>
-                            </div>
+                        <div class="reveal-link-text reveal-hidden">
+                            <a href="#" class="reveal-popup-open" tabindex="-1">More</a>
                         </div>
                     </div>
                 {{/if}}
