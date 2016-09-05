@@ -254,7 +254,7 @@ define(function(require) {
         postRender: function () {
             this.$('.reveal-widget').imageready(_.bind(function() {
                 // IE hack - IE10/11 doesnt play nice with image sizes but it works on IE 9 which is nice. Because the universe doesnt make sense.
-                if ($('html').hasClass('ie version-10.0') || $('html').hasClass('ie version-11.0')) {
+                if ($('html').hasClass('ie')) {
 
                     var self = this;
                     
