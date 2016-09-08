@@ -123,18 +123,18 @@ div.reveal-widget-item-text-body {
   max-height: 100%;
   max-width: 100%;
   position: absolute;
-  overflow-y: auto;
+  overflow-y: hidden;
   width: 100%;
+  padding: 30px 30px 75px 30px !important;
+  z-index: -1;
 
   p { margin: 0; }
 
   &.reveal-left {
-    padding: 30px 30px 30px 70px !important;
     top: 0;
   }
 
   &.reveal-right {
-    padding: 30px 70px 30px 30px !important;
     top: 0;
   }
 
@@ -142,7 +142,6 @@ div.reveal-widget-item-text-body {
     z-index: 1;
     position: absolute;
     bottom: 0;
-    padding: 70px 30px 30px 30px !important;
 
     p { margin-top: 40px; }
   }
@@ -151,7 +150,6 @@ div.reveal-widget-item-text-body {
     z-index: 1;
     position: absolute;
     bottom: auto;
-    padding: 30px 30px 70px 30px !important;
   }
 }
 
@@ -209,6 +207,25 @@ div.reveal-widget-item-text-body {
 div.reveal-link-text {
     margin-top: 10px;
     display: block;
+    position: absolute;
+    right: 2%;
+    z-index: 9;
+
+    .reveal-left & {
+      bottom: 2%;
+    }
+
+    .reveal-right & {
+      bottom: 2%;
+    }
+
+    .reveal-top & {
+      bottom: 2%;
+    }
+
+    .reveal-bottom & {
+      bottom: 15%
+    }
 }
 
 .reveal-hidden {

@@ -8,6 +8,7 @@ define(function(require) {
 
     var ComponentView = require("coreViews/componentView");
     var Adapt = require("coreJS/adapt");
+    var dotdotdot = require("components/adapt-contrib-reveal/js/jquery.dotdotdot.min.js");
 
     var Reveal = ComponentView.extend({
 
@@ -32,7 +33,6 @@ define(function(require) {
         preRender: function() {
             var orientation;
             this.listenTo(Adapt, 'device:resize', this.resizeControl, this);
-            this.listenTo(Adapt, 'device:changed', this.setDeviceSize, this);
 
             switch (this.model.get('_direction')) {
                 case 'left':
@@ -45,8 +45,6 @@ define(function(require) {
             }
 
             this.model.set('_orientation', orientation);
-
-            this.setDeviceSize();
         },
         
         setupReveal: function() {
@@ -81,6 +79,10 @@ define(function(require) {
             } else {
                 this.calculateHeights();
             }
+
+            // Call jQuery dotdotdot to control reveal text responsively 
+            this.$('.reveal-widget-item-text-body').dotdotdot({ watch: "window" });
+            this.ellipsisControl();
         },
 
         setControlText: function(isRevealed) {
@@ -156,60 +158,24 @@ define(function(require) {
             return this.model.get('_orientation') == this.orientationStates.Horizontal ? 'left' : 'top';
         },
 
-        setDeviceSize: function() {
-            if (Adapt.device.screenSize === 'large') {
-                this.$el.addClass('desktop').removeClass('mobile');
-                this.model.set('_isDesktop', true);
-            } else {
-                this.$el.addClass('mobile').removeClass('desktop');
-                this.model.set('_isDesktop', false);
-            }
+        // Show or Hide full reveal text dialog control.
+        ellipsisControl: function() {
+            var revealContainers = ['.reveal-first-long', '.reveal-second-long']
 
-            // On mobile, Check for items with long text. We'll provide a popup for these
-            var CHAR_LIMIT = 50;
-            var first = this.model.get('first');
-            var second = this.model.get('second');
+            $.each( revealContainers, function(index, reveal) { 
+                var isTruncated = $('.reveal-widget-item-text-body' + reveal).triggerHandler("isTruncated");
+                
+                if ( isTruncated ) {
+                    $(reveal).parent().find(".reveal-link-text").removeClass('reveal-hidden');
+                } else {
+                    if (!$(reveal).parent().find(".reveal-link-text").hasClass('reveal-hidden')) {
+                        $(reveal).parent().find(".reveal-link-text").addClass('reveal-hidden');
+                    }
+                }
+            });
 
-            if (typeof first === 'undefined' || typeof second === 'undefined') {
-                return false;
-            }
-
-            var firstCharLimit = first._maxCharacters || CHAR_LIMIT;
-            var secondCharLimit = second._maxCharacters || CHAR_LIMIT;
-            var firstHasPopup = first.body && first.body.length > firstCharLimit;
-            var secondHasPopup = second.body && second.body.length > secondCharLimit;
-
-            if (firstHasPopup) {
-                if (first.body) {
-                    this.model.set('_firstShortText', $(first.body).text().substring(0, firstCharLimit) + '...');
-                }
-            }
-            if (secondHasPopup) {
-                if (second.body) {
-                    this.model.set('_secondShortText', $(second.body).text().substring(0, secondCharLimit) + '...');
-                }
-            }
-            if (Adapt.device.screenSize != 'large') {
-                this.model.set('_displayFirstShortText', firstHasPopup);
-                this.model.set('_displaySecondShortText', secondHasPopup);
-                if (firstHasPopup) {
-                    this.$('.reveal-first-short').removeClass('reveal-hidden');
-                    this.$('.reveal-first-long').addClass('reveal-hidden');
-                }
-                if (secondHasPopup) {
-                    this.$('.reveal-second-short').removeClass('reveal-hidden');
-                    this.$('.reveal-second-long').addClass('reveal-hidden');
-                }
-            } else {
-                this.model.set('_displayFirstShortText', false);
-                this.model.set('_displaySecondShortText', false);
-                this.$('.reveal-first-short').addClass('reveal-hidden');
-                this.$('.reveal-first-long').removeClass('reveal-hidden');
-                this.$('.reveal-second-short').addClass('reveal-hidden');
-                this.$('.reveal-second-long').removeClass('reveal-hidden');
-            }
         },
-
+        
         resizeControl: function() {
             var direction = this.model.get('_direction');
             var marginType = this.getMarginType();
@@ -249,6 +215,7 @@ define(function(require) {
             
             this.model.set('_scrollSize', imageSize);
             this.model.set('_controlWidth', controlSize);
+            this.ellipsisControl();
         },
 
         postRender: function () {
