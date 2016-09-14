@@ -71,7 +71,7 @@ define(function(require) {
 
             // Reverse reveal item order for the reveal bottom component.
             if (direction == "bottom") {
-                $(this.$('.reveal-widget-item-text.first.reveal-bottom').parent()).insertBefore(this.$('.reveal-widget-item-text.second.reveal-bottom').parent());
+                this.$('.first-item').insertBefore(this.$('.second-item'));
             }
 
             if (this.model.get('_orientation') === this.orientationStates.Horizontal) {
