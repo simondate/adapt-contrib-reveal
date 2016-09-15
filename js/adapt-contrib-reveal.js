@@ -116,7 +116,7 @@ define(function(require) {
             $slider.css('margin-' + direction, margin);
 
             // Ensure the text doesn't overflow the image
-            this.$('div.reveal-widget-item-text').css('width', ($('img.reveal-image').width() - 80));
+            this.$('div.reveal-widget-item-text').css('width', ($('img.reveal-image').width()));
             
             this.model.set('_scrollSize', imageWidth);
             this.model.set('_controlWidth', controlWidth);
@@ -209,7 +209,7 @@ define(function(require) {
                 sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 :  -imageSize
                 $slider.animate(sliderAnimation);
             } else {
-                $slider.css('margin-' + marginType, (direction == marginType) ? imageSize : 0);
+                $slider.css('margin-' + marginType, (direction == marginType) ? -imageSize : 0);
             }
 
             
