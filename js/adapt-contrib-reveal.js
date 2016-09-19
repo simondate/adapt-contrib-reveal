@@ -185,7 +185,9 @@ define(function(require) {
             var controlSize;
             
             if (this.model.get('_orientation') == this.orientationStates.Horizontal) {
-                imageSize = $widget.width();
+                var innerSize = this.$('.reveal-inner').width();
+
+                imageSize = innerSize != $widget.width() ? innerSize : $widget.width();
                 controlSize = this.$('.reveal-widget-control').width();
                 $widget.css('width', imageSize);
                 $slider.css('width',  imageSize * 2);
