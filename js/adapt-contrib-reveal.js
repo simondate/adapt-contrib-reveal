@@ -161,17 +161,21 @@ define(function(require) {
         // Show or Hide full reveal text dialog control.
         ellipsisControl: function() {
             var revealContainers = ['.reveal-first-long', '.reveal-second-long']
-
+            
             $.each( revealContainers, function(index, reveal) { 
-                var isTruncated = $('.reveal-widget-item-text-body' + reveal).triggerHandler("isTruncated");
+                var revealSlides = $('.reveal-widget-item-text-body' + reveal);
                 
-                if ( isTruncated ) {
-                    $(reveal).parent().find(".reveal-link-text").removeClass('reveal-hidden');
-                } else {
-                    if (!$(reveal).parent().find(".reveal-link-text").hasClass('reveal-hidden')) {
-                        $(reveal).parent().find(".reveal-link-text").addClass('reveal-hidden');
+                $.each( revealSlides, function(index, slide)  {
+                    var isTruncated = $(slide).triggerHandler("isTruncated");
+
+                    if ( isTruncated ) {
+                        $(reveal).parent().find(".reveal-link-text").removeClass('reveal-hidden');
+                    } else {
+                        if (!$(reveal).parent().find(".reveal-link-text").hasClass('reveal-hidden')) {
+                            $(reveal).parent().find(".reveal-link-text").addClass('reveal-hidden');
+                        }
                     }
-                }
+                });
             });
 
         },
@@ -181,6 +185,7 @@ define(function(require) {
             var marginType = this.getMarginType();
             var $widget = this.$('.reveal-widget');
             var $slider = this.$('.reveal-widget-slider');
+            var $widgetText = this.$('.reveal-widget-item-text');
             var imageSize;
             var controlSize;
             
@@ -190,11 +195,13 @@ define(function(require) {
                 imageSize = innerSize != $widget.width() ? innerSize : $widget.width();
                 controlSize = this.$('.reveal-widget-control').width();
                 $widget.css('width', imageSize);
+                $widgetText.css('width', imageSize);
                 $slider.css('width',  imageSize * 2);
             } else {
                 imageSize = this.$('.reveal-widget img').height();
                 controlSize = this.$('.reveal-widget-control').height();
                 $widget.css('height', imageSize);
+                $widgetText.css('height', imageSize);
                 $slider.css('height',  imageSize);
             }
 
