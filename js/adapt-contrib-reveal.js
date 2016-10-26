@@ -160,24 +160,21 @@ define(function(require) {
 
         // Show or Hide full reveal text dialog control.
         ellipsisControl: function() {
-            var revealContainers = ['.reveal-first-long', '.reveal-second-long']
+            var revealContainers = [this.$('.reveal-first-long'), this.$('.reveal-second-long')];
             
-            $.each( revealContainers, function(index, reveal) { 
-                var revealSlides = $('.reveal-widget-item-text-body' + reveal);
+            $.each(revealContainers, function(index, reveal) { 
+                $(reveal).trigger("update");
+                var isTruncated = $(reveal).triggerHandler("isTruncated");
+                var moreButton = $(reveal).parent().find(".reveal-link-text");
                 
-                $.each( revealSlides, function(index, slide)  {
-                    var isTruncated = $(slide).triggerHandler("isTruncated");
-
-                    if ( isTruncated ) {
-                        $(reveal).parent().find(".reveal-link-text").removeClass('reveal-hidden');
-                    } else {
-                        if (!$(reveal).parent().find(".reveal-link-text").hasClass('reveal-hidden')) {
-                            $(reveal).parent().find(".reveal-link-text").addClass('reveal-hidden');
-                        }
+                if (isTruncated) {
+                    $(moreButton).removeClass('reveal-hidden');
+                } else {
+                    if (!$(moreButton).hasClass('reveal-hidden')) {
+                        $(moreButton).addClass('reveal-hidden');
                     }
-                });
+                }
             });
-
         },
         
         resizeControl: function() {
