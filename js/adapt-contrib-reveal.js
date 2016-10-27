@@ -162,10 +162,10 @@ define(function(require) {
         ellipsisControl: function() {
             var revealContainers = [this.$('.reveal-first-long'), this.$('.reveal-second-long')];
             
-            $.each(revealContainers, function(index, reveal) { 
-                $(reveal).trigger("update");
-                var isTruncated = $(reveal).triggerHandler("isTruncated");
-                var moreButton = $(reveal).parent().find(".reveal-link-text");
+            $.each(revealContainers, function(index, $reveal) { 
+                $reveal.trigger("update");
+                var isTruncated = $reveal.triggerHandler("isTruncated");
+                var moreButton = $reveal.parent().find(".reveal-link-text");
                 
                 if (isTruncated) {
                     $(moreButton).removeClass('reveal-hidden');
