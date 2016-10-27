@@ -13,7 +13,7 @@
                             {{{a11y_text second.body}}}                          
                         </div>
                         <div class="reveal-link-text reveal-hidden">
-                            <a href="#" class="reveal-popup-open" tabindex="-1">More</a>
+                            <a href="#" class="reveal-popup-open" tabindex="-1">{{#if second.moreText}}{{second.moreText}}{{else}}More{{/if}}</a>
                         </div>
                     </div>
                 {{/if}}
@@ -28,7 +28,7 @@
                             {{{a11y_text first.body}}}
                         </div>
                         <div class="reveal-link-text reveal-hidden">
-                            <a href="#" class="reveal-popup-open" tabindex="-1">More</a>
+                            <a href="#" class="reveal-popup-open" tabindex="-1">{{#if first.moreText}}{{first.moreText}}{{else}}More{{/if}}</a>
                         </div>
                     </div>
                 {{/if}}
