@@ -27,7 +27,8 @@
       "default": "",
       "inputType": "Text",
       "validators": [],
-      "help": "This is the instruction text"
+      "help": "This is the instruction text",
+      "translatable": true
     },
     "_direction": {
       "type": "string",
@@ -51,7 +52,8 @@
           "default": "Hide",
           "inputType": "Text",
           "validators": [],
-          "help": "Text which when clicked hides the reveal"
+          "help": "Text which when clicked hides the reveal",
+          "translatable": true
         },
         "showText": {
           "type": "string",
@@ -60,7 +62,8 @@
           "default": "Show",
           "inputType": "Text",
           "validators": [],
-          "help": "Text which when clicked shows the reveal"
+          "help": "Text which when clicked shows the reveal",
+          "translatable": true
         }
       }
     },
@@ -75,7 +78,8 @@
           "default": "",
           "inputType": "Text",
           "validators": [],
-          "help": "Title of the initial item"
+          "help": "Title of the initial item",
+          "translatable": true
         },
         "src": {
           "type":"string",
@@ -93,7 +97,8 @@
           "default": "",
           "inputType": "Text",
           "validators": [],
-          "help": "Text displayed when hovering over the image"
+          "help": "Text displayed when hovering over the image",
+          "translatable": true
         },
         "body": {
           "type":"string",
@@ -102,7 +107,8 @@
           "title": "Initial text",
           "inputType": "TextArea",
           "validators": [],
-          "help": "Initial text to be displayed over the image"
+          "help": "Initial text to be displayed over the image",
+          "translatable": true
         },
         "_maxCharacters": {
           "type":"number",
@@ -120,7 +126,8 @@
           "default": "More",
           "inputType": "Text",
           "validators": [],
-          "help": "Text which is placed in the link for 'more' text"
+          "help": "Text which is placed in the link for 'more' text",
+          "translatable": true
         }
       }
     },
@@ -135,7 +142,8 @@
           "default": "",
           "inputType": "Text",
           "validators": [],
-          "help": "Title of the revealed item"
+          "help": "Title of the revealed item",
+          "translatable": true
         },
         "src": {
           "type":"string",
@@ -153,7 +161,8 @@
           "default": "",
           "inputType": "Text",
           "validators": [],
-          "help": "Text displayed when hovering over the image"
+          "help": "Text displayed when hovering over the image",
+          "translatable": true
         },
         "body": {
           "type":"string",
@@ -162,7 +171,8 @@
           "title": "Reveal text",
           "inputType": "TextArea",
           "validators": [],
-          "help": "Text which will be displayed on reveal"
+          "help": "Text which will be displayed on reveal",
+          "translatable": true
         },
         "_maxCharacters": {
           "type":"number",
@@ -179,7 +189,8 @@
           "default": "More",
           "inputType": "Text",
           "validators": [],
-          "help": "Text which is placed in the link for 'more' text"
+          "help": "Text which is placed in the link for 'more' text",
+          "translatable": true
         }
       }
     }
