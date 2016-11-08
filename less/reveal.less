@@ -131,12 +131,12 @@ div.reveal-widget-item-text-body {
 
   &.reveal-left {
     top: 0;
-    padding: 30px 30px 30px 55px !important;
+    padding: 30px 30px 40px 55px !important;
   }
 
   &.reveal-right {
     top: 0;
-    padding: 30px 55px 30px 30px !important;
+    padding: 30px 55px 40px 30px !important;
   }
 
   &.reveal-top {
@@ -152,7 +152,7 @@ div.reveal-widget-item-text-body {
     z-index: 1;
     position: absolute;
     bottom: auto;
-    padding: 30px 30px 75px 30px !important;
+    padding: 30px 30px 95px 30px !important;
   }
 }
 
@@ -207,7 +207,7 @@ div.reveal-widget-item-text-body {
     }
 }
 
-div.reveal-link-text {
+.reveal-link-text {
     margin-top: 10px;
     display: block;
     position: absolute;
@@ -215,21 +215,46 @@ div.reveal-link-text {
     z-index: 9;
 
     .reveal-left & {
-      bottom: 2%;
-    }
-
-    .reveal-right & {
-      bottom: 2%;
+        bottom: 3%;
     }
 
     .reveal-top & {
-      bottom: 2%;
-    }
-
-    .reveal-bottom & {
-      bottom: 15%
+        bottom: 3%;
     }
 }
+
+
+.size-small  {
+    .reveal-right .reveal-link-text {
+        bottom: 3%;
+        right: 20%;
+    }
+
+    .reveal-bottom .reveal-link-text {
+        bottom: 25%;
+    }
+}
+
+.size-medium {
+    .reveal-right .reveal-link-text {
+        bottom: 3%;
+        right: 16%;
+    }
+    .reveal-bottom .reveal-link-text {
+        bottom: 16%;
+    }
+}
+
+.size-large  {
+    .reveal-right .reveal-link-text {
+        bottom: 3%;
+        right: 13%;
+    }
+    .reveal-bottom .reveal-link-text {
+        bottom: 12%;
+    }
+}
+
 
 .reveal-hidden {
     display:none !important;
