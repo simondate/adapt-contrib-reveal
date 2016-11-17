@@ -131,12 +131,12 @@ div.reveal-widget-item-text-body {
 
   &.reveal-left {
     top: 0;
-    padding: 30px 30px 30px 55px !important;
+    padding: 30px 30px 40px 55px !important;
   }
 
   &.reveal-right {
     top: 0;
-    padding: 30px 55px 30px 30px !important;
+    padding: 30px 55px 40px 30px !important;
   }
 
   &.reveal-top {
@@ -152,7 +152,7 @@ div.reveal-widget-item-text-body {
     z-index: 1;
     position: absolute;
     bottom: auto;
-    padding: 30px 30px 75px 30px !important;
+    padding: 30px 30px 95px 30px !important;
   }
 }
 
@@ -207,27 +207,20 @@ div.reveal-widget-item-text-body {
     }
 }
 
-div.reveal-link-text {
+.reveal-link-text {
     margin-top: 10px;
     display: block;
     position: absolute;
-    right: 2%;
+    right: 12%;
+    bottom: 3%;
     z-index: 9;
 
-    .reveal-left & {
-      bottom: 2%;
+    .reveal-bottom & {
+        bottom: 51px;
     }
 
     .reveal-right & {
-      bottom: 2%;
-    }
-
-    .reveal-top & {
-      bottom: 2%;
-    }
-
-    .reveal-bottom & {
-      bottom: 15%
+        right: 51px;
     }
 }
 
