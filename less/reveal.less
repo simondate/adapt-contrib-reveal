@@ -34,7 +34,7 @@
         float: right;
         width: 50%;
     }
-    
+
     .reveal-image {
         display: block;
     }
@@ -122,37 +122,73 @@ div.reveal-widget-item-text-body {
   margin: 0;
   max-height: 100%;
   max-width: 100%;
-  position: absolute;
   overflow-y: hidden;
+  position: absolute;
   width: 100%;
   z-index: -1;
 
-  p { margin: 0; }
-
   &.reveal-left {
     top: 0;
-    padding: 30px 30px 40px 55px !important;
+    padding: 40px 40px 60px 90px;
+
+    @media only screen and (min-width: @device-width-small) {
+        padding-right: 52.5px;
+    }
+
+    @media only screen and (min-width: @device-width-medium) {
+        padding-right: 60px;
+    }
+
   }
 
   &.reveal-right {
     top: 0;
-    padding: 30px 55px 40px 30px !important;
+    padding: 40px 90px 60px 37.5px;
+
+    @media only screen and (min-width: @device-width-small) {
+        padding-left: 52.5px;
+    }
+
+    @media only screen and (min-width: @device-width-medium)  {
+        padding-left: 60px;
+    }
+
+  }
+
+  &.reveal-top,
+  &.reveal-bottom {
+    padding: 40px 37.5px 60px 37.5px;
   }
 
   &.reveal-top {
-    z-index: 1;
-    position: absolute;
     bottom: 0;
-    padding: 30px 30px 75px 30px !important;
+    padding-top: 90px !important;
+    position: absolute;
+    z-index: 1;
 
-    p { margin-top: 40px; }
+
+    @media only screen and (min-width: @device-width-small) {
+        padding: 90px 52.5px 60px 52.5px;
+    }
+
+    @media only screen and (min-width: @device-width-medium) {
+        padding: 90px 60px 60px 60px;
+    }
+
   }
 
   &.reveal-bottom {
-    z-index: 1;
-    position: absolute;
     bottom: auto;
-    padding: 30px 30px 95px 30px !important;
+    padding-bottom: 90px !important;
+    position: absolute;
+    z-index: 1;
+
+    @media only screen and (min-width: @device-width-small) {
+        padding: 40px 52.5px 60px 52.5px;
+    }
+    @media only screen and (min-width: @device-width-medium) {
+        padding: 90px 60px 60px 60px;
+    }
   }
 }
 
