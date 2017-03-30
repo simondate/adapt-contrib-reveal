@@ -45,8 +45,19 @@ define(function(require) {
             }
 
             this.model.set('_orientation', orientation);
+
+            this.checkIfResetOnRevisit();
         },
-        
+
+        checkIfResetOnRevisit: function() {
+            var isResetOnRevisit = this.model.get('_isResetOnRevisit');
+
+            // If reset is enabled set defaults
+            if (isResetOnRevisit) {
+                this.model.reset(isResetOnRevisit);
+            }
+        },
+
         setupReveal: function() {
             var direction = !this.model.get('_direction') ? "left" : this.model.get('_direction');
             var iconDirection = this.getIconDirection(direction);
