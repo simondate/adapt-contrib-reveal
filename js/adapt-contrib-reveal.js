@@ -91,9 +91,26 @@ define(function(require) {
                 this.calculateHeights();
             }
 
+            var self = this;
             // Call jQuery dotdotdot to control reveal text responsively 
-            this.$('.reveal-widget-item-text-body').dotdotdot({ watch: "window" });
-            this.ellipsisControl();
+            this.$('.reveal-widget-item-text-body').dotdotdot({
+                callback: function(isTruncated, orgContent) {
+
+                    var revealContainers = [self.$('.reveal-first-long'), self.$('.reveal-second-long')];
+
+                    $.each(revealContainers, function(index, $reveal) {
+                        var $moreButton = $reveal.parent().find(".reveal-link-text");
+
+                        if (isTruncated) {
+                            $moreButton.removeClass('reveal-hidden');
+                        } else {
+                            if (!$moreButton.hasClass('reveal-hidden')) {
+                                $moreButton.addClass('reveal-hidden');
+                            }
+                        }
+                    });
+                }
+            });
         },
 
         setControlText: function(isRevealed) {
@@ -188,7 +205,7 @@ define(function(require) {
             });
         },
         
-        resizeControl: function() {
+        resizeControl: _.throttle(function() {
             var direction = this.model.get('_direction');
             var marginType = this.getMarginType();
             var $widget = this.$('.reveal-widget');
@@ -233,7 +250,7 @@ define(function(require) {
             this.model.set('_scrollSize', imageSize);
             this.model.set('_controlWidth', controlSize);
             this.ellipsisControl();
-        },
+        }, 200, {leading: false}),
 
         postRender: function () {
             this.$('.reveal-widget').imageready(_.bind(function() {
