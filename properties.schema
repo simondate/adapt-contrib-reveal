@@ -110,15 +110,6 @@
           "help": "Initial text to be displayed over the image",
           "translatable": true
         },
-        "_maxCharacters": {
-          "type":"number",
-          "required":false,
-          "default": 50,
-          "title": "Maximum characters to display on overlay",
-          "inputType": "Number",
-          "validators": ["number"],
-          "help": "Number of characters to display before clipping the text on mobile devices"
-        },
         "moreText": {
           "type":"string",
           "required":false,
@@ -173,14 +164,6 @@
           "validators": [],
           "help": "Text which will be displayed on reveal",
           "translatable": true
-        },
-        "_maxCharacters": {
-          "type":"number",
-          "required":false,
-          "title": "Maximum characters to display on overlay",
-          "inputType": "Number",
-          "validators": ["number"],
-          "help": "Number of characters to display before clipping the text on mobile devices"
         },
         "moreText": {
           "type":"string",
