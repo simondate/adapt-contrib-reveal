@@ -3,25 +3,24 @@
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Brian Quinn <brian@learningpool.com>
 */
-define(function(require) {
+define([
+    'core/js/adapt',
+    'core/js/views/componentView',
+    'libraries/jquery.dotdotdot'
+],function(Adapt, ComponentView, dotdotdot) {
     'use strict';
-
-    var ComponentView = require("coreViews/componentView");
-    var Adapt = require("coreJS/adapt");
-    var dotdotdot = require("components/adapt-contrib-reveal/js/jquery.dotdotdot.min.js");
 
     var Reveal = ComponentView.extend({
 
         events: function () {
             return Adapt.device.touch == true ? {
-                'touchstart .reveal-widget-control':  'clickReveal',
-                'click .reveal-widget-control':       'clickReveal',
-                'inview':                             'inview',
-                'touchstart .reveal-popup-open':      'openPopup'
+                'click .reveal-widget-control': 'clickReveal',
+                'inview':                       'inview',
+                'click .reveal-popup-open':     'openPopup'
             } : {
-                'click .reveal-widget-control':       'clickReveal',
-                'inview':                             'inview',
-                'click .reveal-popup-open' :          'openPopup'
+                'click .reveal-widget-control': 'clickReveal',
+                'inview':                       'inview',
+                'click .reveal-popup-open' :    'openPopup'
             }
         },
 
@@ -83,6 +82,8 @@ define(function(require) {
             var self = this;
             // Call jQuery dotdotdot to control reveal text responsively 
             this.$('.reveal-widget-item-text-body').dotdotdot({
+                height: self.$('.reveal-widget-item-text-body').height(),
+
                 callback: function(isTruncated, orgContent) {
 
                     var revealContainers = [self.$('.reveal-first-long'), self.$('.reveal-second-long')];
