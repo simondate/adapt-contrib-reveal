@@ -127,6 +127,12 @@ div.reveal-widget-item-text-body {
   width: 100%;
   z-index: -1;
 
+  &:not(.is-truncated) {
+      .reveal-popup-open {
+          display: none;
+      }
+  }
+
   &.reveal-left {
     top: 0;
     padding: 40px 40px 60px 90px;

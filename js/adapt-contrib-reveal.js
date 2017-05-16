@@ -80,26 +80,35 @@ define([
             }
 
             var self = this;
-            // Call jQuery dotdotdot to control reveal text responsively 
-            this.$('.reveal-widget-item-text-body').dotdotdot({
-                height: self.$('.reveal-widget-item-text-body').height(),
 
-                callback: function(isTruncated, orgContent) {
+            this.$('.dot-ellipsis').each(function() {
+                //Checking if update on window resize required
+                var watch_window = $(this).hasClass('dot-resize-update');
 
-                    var revealContainers = [self.$('.reveal-first-long'), self.$('.reveal-second-long')];
+                //Checking if update on timer required
+                var watch_timer = $(this).hasClass('dot-timer-update');
 
-                    $.each(revealContainers, function(index, $reveal) {
-                        var $moreButton = $reveal.parent().find(".reveal-link-text");
+                //Checking if height set
+                var height = 0;
+                var classList = $(this).attr('class').split(/\s+/);
+                $.each(classList, function(index, item) {
+                    var matchResult = item.match(/^dot-height-(\d+)$/);
+                    if (matchResult !== null)
+                        height = Number(matchResult[1]);
+                });
 
-                        if (isTruncated) {
-                            $moreButton.removeClass('reveal-hidden');
-                        } else {
-                            if (!$moreButton.hasClass('reveal-hidden')) {
-                                $moreButton.addClass('reveal-hidden');
-                            }
-                        }
-                    });
-                }
+                //Invoking jQuery.dotdotdot
+                var x = {};
+                if (watch_timer)
+                    x.watch = true;
+                if (watch_window)
+                    x.watch = 'window';
+                if (height > 0)
+                    x.height = height;
+
+                x.after = 'a.reveal-popup-open';
+
+                $(this).dotdotdot(x);
             });
         },
 
@@ -175,25 +184,6 @@ define([
         getMarginType: function() {
             return this.model.get('_orientation') == this.orientationStates.Horizontal ? 'left' : 'top';
         },
-
-        // Show or Hide full reveal text dialog control.
-        ellipsisControl: function() {
-            var revealContainers = [this.$('.reveal-first-long'), this.$('.reveal-second-long')];
-            
-            $.each(revealContainers, function(index, $reveal) { 
-                $reveal.trigger("update");
-                var isTruncated = $reveal.triggerHandler("isTruncated");
-                var moreButton = $reveal.parent().find(".reveal-link-text");
-                
-                if (isTruncated) {
-                    $(moreButton).removeClass('reveal-hidden');
-                } else {
-                    if (!$(moreButton).hasClass('reveal-hidden')) {
-                        $(moreButton).addClass('reveal-hidden');
-                    }
-                }
-            });
-        },
         
         resizeControl: _.throttle(function() {
             var direction = this.model.get('_direction');
@@ -236,10 +226,8 @@ define([
                 $slider.css('margin-' + marginType, (direction == marginType) ? -imageSize : 0);
             }
 
-            
             this.model.set('_scrollSize', imageSize);
             this.model.set('_controlWidth', controlSize);
-            this.ellipsisControl();
         }, 200, {leading: false}),
 
         postRender: function () {
