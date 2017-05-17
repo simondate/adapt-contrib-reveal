@@ -90,16 +90,14 @@ define([
                 this.calculateHeights();
             }
 
-            var self = this;
-
             this.$('.dot-ellipsis').each(function() {
-                //Checking if update on window resize required
-                var watch_window = $(this).hasClass('dot-resize-update');
+                // Checking if update on window resize required.
+                var watchWindow = $(this).hasClass('dot-resize-update');
 
-                //Checking if update on timer required
-                var watch_timer = $(this).hasClass('dot-timer-update');
+                // Checking if update on timer required.
+                var watchTimer = $(this).hasClass('dot-timer-update');
 
-                //Checking if height set
+                // Checking if height set.
                 var height = 0;
                 var classList = $(this).attr('class').split(/\s+/);
                 $.each(classList, function(index, item) {
@@ -108,15 +106,16 @@ define([
                         height = Number(matchResult[1]);
                 });
 
-                //Invoking jQuery.dotdotdot
+                // Invoking jQuery.dotdotdot.
                 var x = {};
-                if (watch_timer)
+                if (watchTimer)
                     x.watch = true;
-                if (watch_window)
+                if (watchWindow)
                     x.watch = 'window';
                 if (height > 0)
                     x.height = height;
 
+                // Selector for the 'More' button.
                 x.after = 'a.reveal-popup-open';
 
                 $(this).dotdotdot(x);
