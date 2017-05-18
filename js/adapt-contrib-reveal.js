@@ -3,25 +3,24 @@
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Brian Quinn <brian@learningpool.com>
 */
-define(function(require) {
+define([
+    'core/js/adapt',
+    'core/js/views/componentView',
+    'libraries/jquery.dotdotdot'
+],function(Adapt, ComponentView, dotdotdot) {
     'use strict';
-
-    var ComponentView = require("coreViews/componentView");
-    var Adapt = require("coreJS/adapt");
-    var dotdotdot = require("components/adapt-contrib-reveal/js/jquery.dotdotdot.min.js");
 
     var Reveal = ComponentView.extend({
 
         events: function () {
             return Adapt.device.touch == true ? {
-                'touchstart .reveal-widget-control':  'clickReveal',
-                'click .reveal-widget-control':       'clickReveal',
-                'inview':                             'inview',
-                'touchstart .reveal-popup-open':      'openPopup'
+                'click .reveal-widget-control': 'clickReveal',
+                'inview':                       'inview',
+                'click .reveal-popup-open':     'openPopup'
             } : {
-                'click .reveal-widget-control':       'clickReveal',
-                'inview':                             'inview',
-                'click .reveal-popup-open' :          'openPopup'
+                'click .reveal-widget-control': 'clickReveal',
+                'inview':                       'inview',
+                'click .reveal-popup-open' :    'openPopup'
             }
         },
 
@@ -45,8 +44,19 @@ define(function(require) {
             }
 
             this.model.set('_orientation', orientation);
+
+            this.checkIfResetOnRevisit();
         },
-        
+
+        checkIfResetOnRevisit: function() {
+            var isResetOnRevisit = this.model.get('_isResetOnRevisit');
+
+            // If reset is enabled set defaults
+            if (isResetOnRevisit) {
+                this.model.reset(isResetOnRevisit);
+            }
+        },
+
         setupReveal: function() {
             var direction = !this.model.get('_direction') ? "left" : this.model.get('_direction');
             var iconDirection = this.getIconDirection(direction);
@@ -80,9 +90,36 @@ define(function(require) {
                 this.calculateHeights();
             }
 
-            // Call jQuery dotdotdot to control reveal text responsively 
-            this.$('.reveal-widget-item-text-body').dotdotdot({ watch: "window" });
-            this.ellipsisControl();
+            this.$('.dot-ellipsis').each(function() {
+                // Checking if update on window resize required.
+                var watchWindow = $(this).hasClass('dot-resize-update');
+
+                // Checking if update on timer required.
+                var watchTimer = $(this).hasClass('dot-timer-update');
+
+                // Checking if height set.
+                var height = 0;
+                var classList = $(this).attr('class').split(/\s+/);
+                $.each(classList, function(index, item) {
+                    var matchResult = item.match(/^dot-height-(\d+)$/);
+                    if (matchResult !== null)
+                        height = Number(matchResult[1]);
+                });
+
+                // Invoking jQuery.dotdotdot.
+                var x = {};
+                if (watchTimer)
+                    x.watch = true;
+                if (watchWindow)
+                    x.watch = 'window';
+                if (height > 0)
+                    x.height = height;
+
+                // Selector for the 'More' button.
+                x.after = 'a.reveal-popup-open';
+
+                $(this).dotdotdot(x);
+            });
         },
 
         setControlText: function(isRevealed) {
@@ -157,27 +194,8 @@ define(function(require) {
         getMarginType: function() {
             return this.model.get('_orientation') == this.orientationStates.Horizontal ? 'left' : 'top';
         },
-
-        // Show or Hide full reveal text dialog control.
-        ellipsisControl: function() {
-            var revealContainers = [this.$('.reveal-first-long'), this.$('.reveal-second-long')];
-            
-            $.each(revealContainers, function(index, $reveal) { 
-                $reveal.trigger("update");
-                var isTruncated = $reveal.triggerHandler("isTruncated");
-                var moreButton = $reveal.parent().find(".reveal-link-text");
-                
-                if (isTruncated) {
-                    $(moreButton).removeClass('reveal-hidden');
-                } else {
-                    if (!$(moreButton).hasClass('reveal-hidden')) {
-                        $(moreButton).addClass('reveal-hidden');
-                    }
-                }
-            });
-        },
         
-        resizeControl: function() {
+        resizeControl: _.throttle(function() {
             var direction = this.model.get('_direction');
             var marginType = this.getMarginType();
             var $widget = this.$('.reveal-widget');
@@ -218,11 +236,9 @@ define(function(require) {
                 $slider.css('margin-' + marginType, (direction == marginType) ? -imageSize : 0);
             }
 
-            
             this.model.set('_scrollSize', imageSize);
             this.model.set('_controlWidth', controlSize);
-            this.ellipsisControl();
-        },
+        }, 200, {leading: false}),
 
         postRender: function () {
             this.$('.reveal-widget').imageready(_.bind(function() {
