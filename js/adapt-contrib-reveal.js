@@ -45,6 +45,10 @@ define([
 
             this.model.set('_orientation', orientation);
 
+            var defaultTextDirection = Adapt.config.get('_defaultDirection');
+            (defaultTextDirection == 'rtl') ? defaultTextDirection = 'right' : defaultTextDirection = 'left';
+            this.model.set('_defaultTextDirection', defaultTextDirection);
+
             this.checkIfResetOnRevisit();
         },
 
@@ -311,6 +315,10 @@ define([
                 classToAdd = 'icon-controls-' + iconDirection;
                 classToRemove = 'icon-controls-' + this.getOppositeDirection(iconDirection);
 
+                if (this.model.get('_defaultTextDirection') == 'right' && (direction == 'left' || direction == 'right')) {
+                    marginType = this.getOppositeDirection(marginType);
+                }
+                
                 sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 : -scrollSize;
 
                 this.setCompletionStatus();
@@ -327,6 +335,10 @@ define([
                 controlAnimation[direction] = 0;
                 classToAdd = 'icon-controls-' + this.getOppositeDirection(iconDirection);
                 classToRemove = 'icon-controls-' + iconDirection
+
+                if (this.model.get('_defaultTextDirection') == 'right' && (direction == 'left' || direction == 'right')) {
+                    marginType = this.getOppositeDirection(marginType);
+                }
 
                 sliderAnimation['margin-' + marginType] = (direction == marginType) ? operator + controlMovement : 0;
             }
