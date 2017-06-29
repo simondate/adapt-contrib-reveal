@@ -45,6 +45,10 @@ define([
 
             this.model.set('_orientation', orientation);
 
+            var defaultTextDirection = Adapt.config.get('_defaultDirection');
+            defaultTextDirection = (defaultTextDirection === 'rtl') ? 'right' : 'left';
+            this.model.set('_defaultTextDirection', defaultTextDirection);
+
             this.checkIfResetOnRevisit();
         },
 
@@ -288,6 +292,7 @@ define([
             var controlMovement = (!this.model.get('_revealed')) ? scrollSize - controlWidth : scrollSize;
             var operator = !this.model.get('_revealed') ? '+=' : '-=';
             var iconDirection = this.getIconDirection(direction);
+            var defaultTextDirection = this.model.get('_defaultTextDirection');
             var controlAnimation = {};
             var sliderAnimation = {};
             var classToAdd;
@@ -295,6 +300,10 @@ define([
 
             // Clear all disabled accessibility settings 
             this.$('.reveal-widget-item-text-body').removeClass('a11y-ignore').removeAttr('aria-hidden').removeAttr('tab-index'); 
+
+            if (defaultTextDirection === 'right' && (direction == 'left' || direction == 'right')) {
+                marginType = this.getOppositeDirection(marginType);
+            }
 
             // Define the animations and new icon styles
             if (!this.model.get('_revealed')) {
@@ -310,7 +319,7 @@ define([
                 controlAnimation[direction] = operator + controlMovement;
                 classToAdd = 'icon-controls-' + iconDirection;
                 classToRemove = 'icon-controls-' + this.getOppositeDirection(iconDirection);
-
+        
                 sliderAnimation['margin-' + marginType] = (direction == marginType) ? 0 : -scrollSize;
 
                 this.setCompletionStatus();
@@ -326,7 +335,7 @@ define([
 
                 controlAnimation[direction] = 0;
                 classToAdd = 'icon-controls-' + this.getOppositeDirection(iconDirection);
-                classToRemove = 'icon-controls-' + iconDirection
+                classToRemove = 'icon-controls-' + iconDirection;
 
                 sliderAnimation['margin-' + marginType] = (direction == marginType) ? operator + controlMovement : 0;
             }
