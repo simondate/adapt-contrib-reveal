@@ -199,7 +199,7 @@ define([
             return this.model.get('_orientation') == this.orientationStates.Horizontal ? 'left' : 'top';
         },
         
-        resizeControl: _.throttle(function() {
+        resizeControl: function() {
             var direction = this.model.get('_direction');
             var marginType = this.getMarginType();
             var $widget = this.$('.reveal-widget');
@@ -242,7 +242,7 @@ define([
 
             this.model.set('_scrollSize', imageSize);
             this.model.set('_controlWidth', controlSize);
-        }, 200, {leading: false}),
+        },
 
         postRender: function () {
             this.$('.reveal-widget').imageready(_.bind(function() {
